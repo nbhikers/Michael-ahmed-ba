@@ -1653,8 +1653,8 @@
   let W, H, grid = 64, segments = [], nodes = [], pulses = [];
 
   function resize() {
-    W = canvas.width = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
     build();
   }
 
