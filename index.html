@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Michael Ahmed — Senior Business Analyst & Process Architecture Specialist with 20 years of enterprise transformation experience across financial services, government and regulated operations." />
   <title>Michael Ahmed — Senior Business Analyst & Process Specialist</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,8 +27,17 @@
       font-size: 16px;
       line-height: 1.7;
       color: var(--text);
-      background: var(--white);
+      background: #f0f4f8;
     }
+    /* Allow circuit board to show through all sections */
+    section { position: relative; z-index: 1; }
+    section:not(#hero):not(#royal-london):not(#contact):not(#dashboard) {
+      background: rgba(244,246,249,0.88) !important;
+    }
+    section:nth-child(even):not(#hero):not(#royal-london):not(#contact):not(#dashboard) {
+      background: rgba(248,250,252,0.88) !important;
+    }
+    #royal-london, #contact, #dashboard { position: relative; z-index: 1; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     img { max-width: 100%; display: block; }
@@ -35,11 +45,10 @@
     /* ── Layout ── */
     .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
     section { padding: 80px 0; }
-    section:nth-child(even) { background: var(--grey); }
 
     /* ── Nav ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       background: var(--navy);
       padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
@@ -47,10 +56,35 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
     .nav-brand {
-      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1px;
+    }
+    .nav-brand-name {
       font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: transparent;
+      background: linear-gradient(180deg, #ffffff 0%, #a8c8e8 40%, #6ea8d0 70%, #3a7ab8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      line-height: 1.1;
+    }
+    .nav-brand-sub {
+      font-size: 9px;
       font-weight: bold;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: transparent;
+      background: linear-gradient(180deg, #7ec8f0 0%, #2e7fc1 60%, #1a5a9a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+      line-height: 1;
     }
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
@@ -64,19 +98,42 @@
     /* ── Hero ── */
     #hero {
       min-height: 100vh;
-      background: linear-gradient(150deg, var(--navy) 0%, var(--blue) 60%, var(--accent) 100%);
+      background: linear-gradient(150deg, #060f1e 0%, var(--navy) 35%, var(--blue) 70%, var(--accent) 100%);
       display: flex; align-items: center;
       padding: 100px 24px 80px;
       position: relative;
       overflow: hidden;
     }
+    /* Grid lines */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(46,127,193,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,127,193,0.10) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Glow spots + circuit SVG overlay */
     #hero::after {
       content: '';
       position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background:
+        radial-gradient(circle at 15% 55%, rgba(14,165,196,0.13) 0%, transparent 45%),
+        radial-gradient(circle at 80% 15%, rgba(46,127,193,0.16) 0%, transparent 38%),
+        radial-gradient(circle at 65% 80%, rgba(26,74,138,0.22) 0%, transparent 40%),
+        radial-gradient(circle at 40% 30%, rgba(14,165,196,0.07) 0%, transparent 30%);
       pointer-events: none;
+      z-index: 0;
     }
-    .hero-content { position: relative; max-width: 720px; }
+    /* Animated circuit traces — fixed full-page overlay */
+    .circuit-canvas {
+      position: fixed; inset: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0; pointer-events: none;
+    }
+    .hero-content { position: relative; max-width: 720px; z-index: 1; }
     .hero-tag {
       display: inline-block;
       background: rgba(255,255,255,0.15);
@@ -650,6 +707,7 @@
       text-align: center;
       padding: 24px;
       font-size: 13px;
+      position: relative; z-index: 1;
     }
 
     /* ── Responsive nav ── */
@@ -657,29 +715,95 @@
       .nav-links { gap: 16px; }
       .nav-links a { font-size: 13px; }
     }
+
+    /* ── Findings & Actions Dashboard ── */
+    #dashboard { background: var(--navy); }
+    #dashboard .section-label { color: #0ea5c4; }
+    #dashboard .section-title { color: var(--white); }
+    #dashboard .section-intro { color: rgba(255,255,255,0.65); }
+    .dash-frame {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; overflow: hidden;
+    }
+    .dash-header {
+      background: rgba(0,0,0,0.2);
+      border-bottom: 2px solid rgba(46,127,193,0.4);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .dash-header-left h2 { font-size: 18px; color: var(--white); font-weight: bold; }
+    .dash-header-left p { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .dash-header-right { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; text-transform: uppercase; }
+    .kpi-strip {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    @media (max-width: 640px) { .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
+    .kpi-box { padding: 18px 16px; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
+    .kpi-box:last-child { border-right: none; }
+    .kpi-box .kv { font-size: 2rem; font-weight: bold; color: var(--white); line-height: 1; }
+    .kpi-box .kv.blue { color: #7ec8f0; }
+    .kpi-box .kv.green { color: #5de09a; }
+    .kpi-box .kl { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.35; }
+    .dash-body { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 900px) { .dash-body { grid-template-columns: 1fr; } }
+    .dash-panel { padding: 20px; border-right: 1px solid rgba(255,255,255,0.08); }
+    .dash-panel:last-child { border-right: none; }
+    .dash-panel-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .chart-wrap { position: relative; height: 180px; }
+    .cat-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .cat-row { display: flex; flex-direction: column; gap: 3px; }
+    .cat-label { font-size: 11px; color: rgba(255,255,255,0.6); display: flex; justify-content: space-between; }
+    .cat-bar-bg { background: rgba(255,255,255,0.08); border-radius: 3px; height: 8px; overflow: hidden; }
+    .cat-bar-fill { height: 100%; border-radius: 3px; }
+    .cat-bar-fill.strategic { background: var(--accent); }
+    .cat-bar-fill.tactical { background: #b05cc8; }
+    .cat-bar-fill.both { background: linear-gradient(90deg, var(--accent) 50%, #b05cc8 50%); }
+    .opp-tags { display: flex; flex-direction: column; gap: 10px; }
+    .opp-tag { border-radius: 5px; padding: 10px 12px; font-size: 12px; line-height: 1.45; }
+    .opp-tag.tactical { background: rgba(176,92,200,0.15); border-left: 3px solid #b05cc8; color: rgba(255,255,255,0.8); }
+    .opp-tag.strategic { background: rgba(46,127,193,0.15); border-left: 3px solid var(--accent); color: rgba(255,255,255,0.8); }
+    .opp-tag strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+    .opp-tag.tactical strong { color: #d07ee0; }
+    .opp-tag.strategic strong { color: #7ec8f0; }
+    .dash-summary { background: rgba(46,127,193,0.08); border-top: 1px solid rgba(46,127,193,0.2); padding: 14px 20px; }
+    .dash-summary h4 { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; color: #7ec8f0; margin-bottom: 8px; }
+    .dash-summary ul { list-style: none; }
+    .dash-summary ul li { font-size: 13px; color: rgba(255,255,255,0.68); padding: 3px 0 3px 16px; position: relative; }
+    .dash-summary ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    .dash-date { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 10px; }
   </style>
 </head>
 <body>
 
+<!-- Full-page circuit board canvas (fixed, behind all content) -->
+<canvas class="circuit-canvas" id="circuitCanvas"></canvas>
+
 <!-- ── Navigation ── -->
 <nav>
-  <span class="nav-brand">Michael Ahmed</span>
+  <div class="nav-brand">
+    <span class="nav-brand-name">Michael Ahmed</span>
+    <span class="nav-brand-sub">Senior Business Analyst</span>
+  </div>
   <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#royal-london">Royal London</a></li>
     <li><a href="#consumer-duty">Consumer Duty</a></li>
     <li><a href="#case-studies">Case Studies</a></li>
+    <li><a href="#dashboard">Findings Tracker</a></li>
     <li><a href="#timeline">Experience</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener" style="color:#7ec8f0;">LinkedIn ↗</a></li>
+    <li><a href="https://www.linkedin.com/in/michael-ahmed-932a9a/" target="_blank" rel="noopener" style="color:#7ec8f0;">LinkedIn ↗</a></li>
   </ul>
 </nav>
 
 <!-- ── Hero ── -->
 <section id="hero">
   <div class="hero-content">
-    <span class="hero-tag">Senior Business Analyst · Process Architecture · Regulated Industries</span>
-    <h1>I map what you do,<br />improve how you do it,<br />and <span>automate where it counts.</span></h1>
+    <span class="hero-tag">Senior Business Analyst · Process Architecture · AI-First · Regulated Industries</span>
+    <h1>I map what you do,<br />improve how you do it,<br /><span>automate where it counts,</span><br />and make your business<br /><span>queryable to AI.</span></h1>
     <p>Twenty years of enterprise transformation across financial services, central government and regulated utilities — from first workshop to governance-ready delivery.</p>
     <div class="hero-ctas">
       <a href="#royal-london" class="btn btn-primary">See Royal London Case Study</a>
@@ -1050,6 +1174,128 @@
   </div>
 </section>
 
+<!-- ── Findings & Actions Dashboard ── -->
+<section id="dashboard">
+  <div class="container">
+    <div class="section-label">BA Deliverable in Practice</div>
+    <h2 class="section-title">Findings &amp; Actions Tracker</h2>
+    <p class="section-intro">A live example of the structured findings dashboard delivered as part of the Royal London Group-wide process architecture engagement — giving leadership a single view of what was found, what it means, and what happens next.</p>
+
+    <div class="dash-frame">
+      <div class="dash-header">
+        <div class="dash-header-left">
+          <h2>Process Architecture — Findings &amp; Actions Tracker</h2>
+          <p>Group-wide Operations Transformation · Life &amp; Pensions · Update Plan Details · Contains data from 2025 onwards</p>
+        </div>
+        <div class="dash-header-right">Findings Actions Tracker</div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi-box"><div class="kv blue">28</div><div class="kl">Total Findings</div></div>
+        <div class="kpi-box"><div class="kv green">19</div><div class="kl">Reviews Complete</div></div>
+        <div class="kpi-box"><div class="kv">68%</div><div class="kl">Completion Rate</div></div>
+        <div class="kpi-box"><div class="kv">31</div><div class="kl">Total Level 3s</div></div>
+        <div class="kpi-box"><div class="kv">142</div><div class="kl">Total Level 4s</div></div>
+      </div>
+
+      <div class="dash-body">
+
+        <!-- Panel 1: Finding Category -->
+        <div class="dash-panel">
+          <div class="dash-panel-title">Finding Category</div>
+          <div class="chart-wrap"><canvas id="categoryChart"></canvas></div>
+          <div style="display:flex;gap:16px;margin-top:12px;justify-content:center;">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:#2e7fc1;display:inline-block;"></span>Strategic
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:#b05cc8;display:inline-block;"></span>Tactical
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="dash-panel-title">Category Breakdown</div>
+            <div class="cat-bars">
+              <div class="cat-row"><div class="cat-label"><span>Procedure Gap</span><span>6</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:100%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>Procedure Unclear</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:83%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>System Limitation</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:83%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>Digital Opportunity</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:83%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>Process Not Aligned</span><span>4</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:67%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>Resource Impacting Service</span><span>2</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:33%"></div></div></div>
+              <div class="cat-row"><div class="cat-label"><span>Risk Appetite Not Aligned</span><span>1</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:17%"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Mapping Status -->
+        <div class="dash-panel">
+          <div class="dash-panel-title">Level 4 Mapping Status</div>
+          <div class="chart-wrap"><canvas id="mappingChart"></canvas></div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:#5de09a;display:inline-block;flex-shrink:0;"></span>Completed <span style="margin-left:auto;color:rgba(255,255,255,0.45);">57</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:#2e7fc1;display:inline-block;flex-shrink:0;"></span>In Progress <span style="margin-left:auto;color:rgba(255,255,255,0.45);">38</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:#b05cc8;display:inline-block;flex-shrink:0;"></span>Not Started <span style="margin-left:auto;color:rgba(255,255,255,0.45);">34</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
+              <span style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-block;flex-shrink:0;"></span>Descoped <span style="margin-left:auto;color:rgba(255,255,255,0.45);">13</span>
+            </div>
+          </div>
+          <div style="margin-top:20px;">
+            <div class="dash-panel-title">Strategic vs Tactical Split</div>
+            <div style="margin-top:8px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Strategic</span><span>11 (39%)</span></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:10px;overflow:hidden;margin-bottom:10px;"><div style="width:39%;height:100%;background:#2e7fc1;border-radius:4px;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Tactical</span><span>17 (61%)</span></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:10px;overflow:hidden;"><div style="width:61%;height:100%;background:#b05cc8;border-radius:4px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Opportunities & Progress -->
+        <div class="dash-panel">
+          <div class="dash-panel-title">Opportunity Classification</div>
+          <div class="opp-tags">
+            <div class="opp-tag tactical">
+              <strong>Tactical Opportunity</strong>
+              Within Group Operations — findings addressable within existing team authority and resource. Agree way forward with process owners.
+            </div>
+            <div class="opp-tag strategic">
+              <strong>Strategic Opportunity</strong>
+              Would need to be developed with wider organisational support and/or funding approval. Escalation to programme board recommended.
+            </div>
+          </div>
+          <div style="margin-top:20px;">
+            <div class="dash-panel-title">Review Progress</div>
+            <div style="margin-top:8px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Reviews Complete</span><span>19 / 28 (68%)</span></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;margin-bottom:12px;"><div style="width:68%;height:100%;background:linear-gradient(90deg,#5de09a,#2e7fc1);border-radius:4px;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Actions In Progress</span><span>9 (32%)</span></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;margin-bottom:12px;"><div style="width:32%;height:100%;background:#2e7fc1;border-radius:4px;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Pending Review</span><span>9 (32%)</span></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;"><div style="width:32%;height:100%;background:#b05cc8;border-radius:4px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="dash-summary">
+        <h4>Findings Summary</h4>
+        <ul>
+          <li>Findings are largely Strategic with all areas also behaving similarly at a Tactical level — requiring a dual-track response</li>
+          <li>Strategic findings point to manual workarounds for less common scenarios — system upgrades may be low-priority items already in a technical team queue</li>
+          <li>Digital Opportunity findings represent structured RPA and AI automation candidates, supported by business cases for delivery handover</li>
+        </ul>
+        <div class="dash-date">Report Date: 21/04/2026 &nbsp;·&nbsp; Level 3: Update Plan Details &nbsp;·&nbsp; Group-wide Operations Transformation · Royal London Group</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── Career Timeline ── -->
 <section id="timeline">
   <div class="container">
@@ -1339,5 +1585,200 @@
   <p style="margin-top:6px">20 years of enterprise transformation · Financial Services · Central Government · Regulated Operations</p>
 </footer>
 
+<script>
+// ── Flowline-style circuit board animation ──
+(function() {
+  const canvas = document.getElementById('circuitCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, grid = 64, segments = [], nodes = [], pulses = [];
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    build();
+  }
+
+  function snap(v) { return Math.round(v / grid) * grid; }
+
+  function build() {
+    segments = []; nodes = []; pulses = [];
+    const cols = Math.floor(W / grid) + 1;
+    const rows = Math.floor(H / grid) + 1;
+
+    // Build a dense grid of horizontal and vertical segments
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols - 1; c++) {
+        if (Math.random() < 0.55) {
+          segments.push({
+            x1: c * grid, y1: r * grid,
+            x2: (c + 1) * grid, y2: r * grid,
+            alpha: 0.08 + Math.random() * 0.14
+          });
+        }
+      }
+    }
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows - 1; r++) {
+        if (Math.random() < 0.55) {
+          segments.push({
+            x1: c * grid, y1: r * grid,
+            x2: c * grid, y2: (r + 1) * grid,
+            alpha: 0.08 + Math.random() * 0.14
+          });
+        }
+      }
+    }
+
+    // Nodes at intersections
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (Math.random() < 0.22) {
+          nodes.push({
+            x: c * grid, y: r * grid,
+            r: 2.5 + Math.random() * 3.5,
+            baseAlpha: 0.2 + Math.random() * 0.45,
+            pulse: Math.random() * Math.PI * 2,
+            speed: 0.018 + Math.random() * 0.025,
+            square: Math.random() < 0.3  // some nodes are square pads like real PCBs
+          });
+        }
+      }
+    }
+
+    // Travelling pulses along segments
+    for (let i = 0; i < 22; i++) {
+      const seg = segments[Math.floor(Math.random() * segments.length)];
+      if (seg) pulses.push({ seg, t: Math.random(), speed: 0.004 + Math.random() * 0.007 });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Static grid segments
+    segments.forEach(s => {
+      ctx.beginPath();
+      ctx.moveTo(s.x1, s.y1);
+      ctx.lineTo(s.x2, s.y2);
+      ctx.strokeStyle = `rgba(46,127,193,${s.alpha})`;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    });
+
+    // Nodes
+    nodes.forEach(n => {
+      n.pulse += n.speed;
+      const a = n.baseAlpha * (0.55 + 0.45 * Math.sin(n.pulse));
+      ctx.save();
+      if (n.square) {
+        const s = n.r * 1.6;
+        ctx.fillStyle = `rgba(46,127,193,${a * 0.6})`;
+        ctx.strokeStyle = `rgba(126,200,240,${a})`;
+        ctx.lineWidth = 1;
+        ctx.fillRect(n.x - s/2, n.y - s/2, s, s);
+        ctx.strokeRect(n.x - s/2, n.y - s/2, s, s);
+        // Inner dot
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(126,200,240,${a})`;
+        ctx.fill();
+      } else {
+        // Outer ring
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 2, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(46,127,193,${a * 0.5})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // Filled dot
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(126,200,240,${a})`;
+        ctx.fill();
+        // Glow
+        const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
+        grd.addColorStop(0, `rgba(126,200,240,${a * 0.35})`);
+        grd.addColorStop(1, 'rgba(126,200,240,0)');
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+
+    // Travelling pulses
+    pulses.forEach(p => {
+      p.t += p.speed;
+      if (p.t > 1.3) {
+        p.seg = segments[Math.floor(Math.random() * segments.length)];
+        p.t = -0.1;
+        p.speed = 0.004 + Math.random() * 0.007;
+      }
+      const t = Math.max(0, Math.min(1, p.t));
+      const px = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t;
+      const py = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t;
+      // Bright dot
+      ctx.beginPath();
+      ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(180,225,255,0.9)';
+      ctx.fill();
+      // Glow around dot
+      const grd = ctx.createRadialGradient(px, py, 0, px, py, 12);
+      grd.addColorStop(0, 'rgba(126,200,240,0.5)');
+      grd.addColorStop(1, 'rgba(126,200,240,0)');
+      ctx.beginPath();
+      ctx.arc(px, py, 12, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+      // Trail
+      const tailT = Math.max(0, t - 0.08);
+      const tx1 = p.seg.x1 + (p.seg.x2 - p.seg.x1) * tailT;
+      const ty1 = p.seg.y1 + (p.seg.y2 - p.seg.y1) * tailT;
+      const grad = ctx.createLinearGradient(tx1, ty1, px, py);
+      grad.addColorStop(0, 'rgba(46,127,193,0)');
+      grad.addColorStop(1, 'rgba(126,200,240,0.7)');
+      ctx.beginPath();
+      ctx.moveTo(tx1, ty1);
+      ctx.lineTo(px, py);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+// ── Charts ──
+window.addEventListener('DOMContentLoaded', function() {
+  const catEl = document.getElementById('categoryChart');
+  const mapEl = document.getElementById('mappingChart');
+  if (catEl) {
+    new Chart(catEl.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Strategic', 'Tactical'],
+        datasets: [{ data: [11, 17], backgroundColor: ['#2e7fc1', '#b05cc8'], borderColor: 'rgba(255,255,255,0.05)', borderWidth: 2, hoverOffset: 4 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/28*100)}%)` } } } }
+    });
+  }
+  if (mapEl) {
+    new Chart(mapEl.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'In Progress', 'Not Started', 'Descoped'],
+        datasets: [{ data: [57, 38, 34, 13], backgroundColor: ['#5de09a', '#2e7fc1', '#b05cc8', 'rgba(255,255,255,0.15)'], borderColor: 'rgba(255,255,255,0.05)', borderWidth: 2, hoverOffset: 4 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/142*100)}% of L4s)` } } } }
+    });
+  }
+});
+</script>
 </body>
 </html>
