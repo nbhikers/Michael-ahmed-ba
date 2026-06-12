@@ -1644,175 +1644,100 @@
 </footer>
 
 <script>
-// ── Flowline-style circuit board animation ──
-(function() {
-  const canvas = document.getElementById('circuitCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, grid = 64, segments = [], nodes = [], pulses = [];
+// ── Circuit board animation ──
+var circuitCanvas = document.getElementById('circuitCanvas');
+if (circuitCanvas) {
+  var cctx = circuitCanvas.getContext('2d');
+  var cW, cH, cGrid = 60, cSegs = [], cNodes = [], cPulses = [];
 
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    build();
+  function cResize() {
+    cW = circuitCanvas.width = window.innerWidth;
+    cH = circuitCanvas.height = window.innerHeight;
+    cBuild();
   }
 
-  function snap(v) { return Math.round(v / grid) * grid; }
-
-  function build() {
-    segments = []; nodes = []; pulses = [];
-    const cols = Math.floor(W / grid) + 1;
-    const rows = Math.floor(H / grid) + 1;
-
-    // Build a dense grid of horizontal and vertical segments
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols - 1; c++) {
-        if (Math.random() < 0.55) {
-          segments.push({
-            x1: c * grid, y1: r * grid,
-            x2: (c + 1) * grid, y2: r * grid,
-            alpha: 0.08 + Math.random() * 0.14
-          });
+  function cBuild() {
+    cSegs = []; cNodes = []; cPulses = [];
+    var cols = Math.floor(cW / cGrid) + 2;
+    var rows = Math.floor(cH / cGrid) + 2;
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols - 1; c++) {
+        if (Math.random() < 0.5) {
+          cSegs.push({ x1: c*cGrid, y1: r*cGrid, x2: (c+1)*cGrid, y2: r*cGrid });
         }
       }
     }
-    for (let c = 0; c < cols; c++) {
-      for (let r = 0; r < rows - 1; r++) {
-        if (Math.random() < 0.55) {
-          segments.push({
-            x1: c * grid, y1: r * grid,
-            x2: c * grid, y2: (r + 1) * grid,
-            alpha: 0.08 + Math.random() * 0.14
-          });
+    for (var c2 = 0; c2 < cols; c2++) {
+      for (var r2 = 0; r2 < rows - 1; r2++) {
+        if (Math.random() < 0.5) {
+          cSegs.push({ x1: c2*cGrid, y1: r2*cGrid, x2: c2*cGrid, y2: (r2+1)*cGrid });
         }
       }
     }
-
-    // Nodes at intersections
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        if (Math.random() < 0.22) {
-          nodes.push({
-            x: c * grid, y: r * grid,
-            r: 2.5 + Math.random() * 3.5,
-            baseAlpha: 0.2 + Math.random() * 0.45,
-            pulse: Math.random() * Math.PI * 2,
-            speed: 0.018 + Math.random() * 0.025,
-            square: Math.random() < 0.3  // some nodes are square pads like real PCBs
-          });
+    for (var r3 = 0; r3 < rows; r3++) {
+      for (var c3 = 0; c3 < cols; c3++) {
+        if (Math.random() < 0.2) {
+          cNodes.push({ x: c3*cGrid, y: r3*cGrid, r: 3 + Math.random()*3, p: Math.random()*Math.PI*2 });
         }
       }
     }
-
-    // Travelling pulses along segments
-    for (let i = 0; i < 22; i++) {
-      const seg = segments[Math.floor(Math.random() * segments.length)];
-      if (seg) pulses.push({ seg, t: Math.random(), speed: 0.004 + Math.random() * 0.007 });
+    for (var i = 0; i < 25; i++) {
+      var seg = cSegs[Math.floor(Math.random() * cSegs.length)];
+      if (seg) cPulses.push({ seg: seg, t: Math.random(), spd: 0.005 + Math.random()*0.007 });
     }
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Static grid segments
-    segments.forEach(s => {
-      ctx.beginPath();
-      ctx.moveTo(s.x1, s.y1);
-      ctx.lineTo(s.x2, s.y2);
-      ctx.strokeStyle = `rgba(46,127,193,${s.alpha})`;
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
+  function cDraw() {
+    cctx.clearRect(0, 0, cW, cH);
+    cSegs.forEach(function(s) {
+      cctx.beginPath();
+      cctx.moveTo(s.x1, s.y1);
+      cctx.lineTo(s.x2, s.y2);
+      cctx.strokeStyle = 'rgba(46,127,193,0.18)';
+      cctx.lineWidth = 1;
+      cctx.stroke();
     });
-
-    // Nodes
-    nodes.forEach(n => {
-      n.pulse += n.speed;
-      const a = n.baseAlpha * (0.55 + 0.45 * Math.sin(n.pulse));
-      ctx.save();
-      if (n.square) {
-        const s = n.r * 1.6;
-        ctx.fillStyle = `rgba(46,127,193,${a * 0.6})`;
-        ctx.strokeStyle = `rgba(126,200,240,${a})`;
-        ctx.lineWidth = 1;
-        ctx.fillRect(n.x - s/2, n.y - s/2, s, s);
-        ctx.strokeRect(n.x - s/2, n.y - s/2, s, s);
-        // Inner dot
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * 0.4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(126,200,240,${a})`;
-        ctx.fill();
-      } else {
-        // Outer ring
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r + 2, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(46,127,193,${a * 0.5})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        // Filled dot
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(126,200,240,${a})`;
-        ctx.fill();
-        // Glow
-        const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
-        grd.addColorStop(0, `rgba(126,200,240,${a * 0.35})`);
-        grd.addColorStop(1, 'rgba(126,200,240,0)');
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
+    cNodes.forEach(function(n) {
+      n.p += 0.02;
+      var a = 0.3 + 0.3 * Math.sin(n.p);
+      cctx.beginPath();
+      cctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      cctx.fillStyle = 'rgba(126,200,240,' + a + ')';
+      cctx.fill();
+    });
+    cPulses.forEach(function(p) {
+      p.t += p.spd;
+      if (p.t > 1.2) {
+        p.seg = cSegs[Math.floor(Math.random() * cSegs.length)];
+        p.t = 0;
       }
-      ctx.restore();
+      var t = Math.min(1, p.t);
+      var px = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t;
+      var py = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t;
+      cctx.beginPath();
+      cctx.arc(px, py, 3, 0, Math.PI*2);
+      cctx.fillStyle = 'rgba(180,230,255,0.95)';
+      cctx.fill();
+      var t0 = Math.max(0, t - 0.1);
+      var px0 = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t0;
+      var py0 = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t0;
+      var g = cctx.createLinearGradient(px0, py0, px, py);
+      g.addColorStop(0, 'rgba(46,127,193,0)');
+      g.addColorStop(1, 'rgba(126,200,240,0.8)');
+      cctx.beginPath();
+      cctx.moveTo(px0, py0);
+      cctx.lineTo(px, py);
+      cctx.strokeStyle = g;
+      cctx.lineWidth = 2;
+      cctx.stroke();
     });
-
-    // Travelling pulses
-    pulses.forEach(p => {
-      p.t += p.speed;
-      if (p.t > 1.3) {
-        p.seg = segments[Math.floor(Math.random() * segments.length)];
-        p.t = -0.1;
-        p.speed = 0.004 + Math.random() * 0.007;
-      }
-      const t = Math.max(0, Math.min(1, p.t));
-      const px = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t;
-      const py = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t;
-      // Bright dot
-      ctx.beginPath();
-      ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(180,225,255,0.9)';
-      ctx.fill();
-      // Glow around dot
-      const grd = ctx.createRadialGradient(px, py, 0, px, py, 12);
-      grd.addColorStop(0, 'rgba(126,200,240,0.5)');
-      grd.addColorStop(1, 'rgba(126,200,240,0)');
-      ctx.beginPath();
-      ctx.arc(px, py, 12, 0, Math.PI * 2);
-      ctx.fillStyle = grd;
-      ctx.fill();
-      // Trail
-      const tailT = Math.max(0, t - 0.08);
-      const tx1 = p.seg.x1 + (p.seg.x2 - p.seg.x1) * tailT;
-      const ty1 = p.seg.y1 + (p.seg.y2 - p.seg.y1) * tailT;
-      const grad = ctx.createLinearGradient(tx1, ty1, px, py);
-      grad.addColorStop(0, 'rgba(46,127,193,0)');
-      grad.addColorStop(1, 'rgba(126,200,240,0.7)');
-      ctx.beginPath();
-      ctx.moveTo(tx1, ty1);
-      ctx.lineTo(px, py);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-    });
-
-    requestAnimationFrame(draw);
+    requestAnimationFrame(cDraw);
   }
 
-  window.addEventListener('resize', resize);
-  window.addEventListener('load', function() {
-    resize();
-    requestAnimationFrame(draw);
-  });
-})();
+  window.addEventListener('resize', cResize);
+  cResize();
+  cDraw();
+}
 
 // ── Charts ──
 window.addEventListener('DOMContentLoaded', function() {
