@@ -29,19 +29,16 @@
       color: var(--text);
       background: #060f1e;
     }
-    /* Page background matches the circuit board backdrop */
-    body { background: #060f1e; }
-
-    /* All sections are semi-transparent so canvas shows through */
-    section { position: relative; z-index: 1; }
+    /* All sections above the canvas */
+    section { position: relative; z-index: 2; }
     #capabilities, #case-studies, #user-story, #skills {
-      background: rgba(240,244,248,0.82) !important;
+      background: rgba(240,244,248,0.85) !important;
     }
-    #timeline      { background: rgba(230,238,248,0.82) !important; }
-    #royal-london  { background: rgba(13,31,60,0.88) !important; }
-    #contact       { background: rgba(13,31,60,0.88) !important; }
-    #dashboard     { background: rgba(13,31,60,0.88) !important; }
-    #consumer-duty { background: rgba(240,244,248,0.82) !important; }
+    #timeline      { background: rgba(230,238,248,0.85) !important; }
+    #royal-london  { background: rgba(13,31,60,0.90) !important; }
+    #contact       { background: rgba(13,31,60,0.90) !important; }
+    #dashboard     { background: rgba(13,31,60,0.90) !important; }
+    #consumer-duty { background: rgba(240,244,248,0.85) !important; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     img { max-width: 100%; display: block; }
@@ -52,7 +49,7 @@
 
     /* ── Nav ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
       background: var(--navy);
       padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
@@ -131,12 +128,12 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Animated circuit traces — fixed behind everything */
+    /* Animated circuit traces — fixed full-page, above body bg, below all content */
     .circuit-canvas {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 0; pointer-events: none;
+      width: 100%; height: 100%;
+      z-index: 1; pointer-events: none;
     }
     .hero-content { position: relative; max-width: 720px; z-index: 1; }
     .hero-tag {
@@ -1811,8 +1808,10 @@
   }
 
   window.addEventListener('resize', resize);
-  resize();
-  draw();
+  window.addEventListener('load', function() {
+    resize();
+    requestAnimationFrame(draw);
+  });
 })();
 
 // ── Charts ──
