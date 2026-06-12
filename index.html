@@ -103,7 +103,7 @@
       display: flex; align-items: center;
       padding: 100px 24px 80px;
       position: relative;
-      overflow: visible;
+      overflow: hidden;
     }
     /* Grid lines */
     #hero::before {
@@ -128,14 +128,14 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Animated circuit traces — fixed full-page, above body bg, below all content */
+    /* Animated circuit traces — inside hero, absolute */
     .circuit-canvas {
-      position: fixed;
+      position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: 1; pointer-events: none;
+      z-index: 0; pointer-events: none;
     }
-    .hero-content { position: relative; max-width: 720px; z-index: 1; }
+    .hero-content { position: relative; max-width: 720px; z-index: 2; }
     .hero-tag {
       display: block;
       font-size: clamp(14px, 2vw, 22px);
@@ -839,9 +839,6 @@
 </head>
 <body>
 
-<!-- Full-page circuit board canvas (fixed, behind all content) -->
-<canvas class="circuit-canvas" id="circuitCanvas"></canvas>
-
 <!-- ── Navigation ── -->
 <nav>
   <div class="nav-brand">
@@ -863,6 +860,7 @@
 
 <!-- ── Hero ── -->
 <section id="hero">
+  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
   <div class="hero-content">
     <div class="hero-tag">Process Architecture · AI-First · Regulated Industries</div>
     <h1>I map what you do,<br />improve how you do it,<br /><span>automate where it counts,</span><br />and make your business<br /><span>queryable to AI.</span></h1>
