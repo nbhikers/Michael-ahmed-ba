@@ -135,16 +135,27 @@
     }
     .hero-content { position: relative; max-width: 720px; z-index: 1; }
     .hero-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.9);
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      display: block;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 24px;
+      color: transparent;
+      background: linear-gradient(180deg,
+        #ffffff 0%,
+        #c8e0f8 25%,
+        #6aaee0 55%,
+        #2e6db8 80%,
+        #1a4a8a 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter:
+        drop-shadow(0 2px 0px rgba(0,0,0,0.7))
+        drop-shadow(0 4px 8px rgba(0,0,0,0.5))
+        drop-shadow(0 1px 0px rgba(255,255,255,0.15));
+      margin-bottom: 28px;
+      line-height: 1.15;
     }
     #hero h1 {
       font-size: clamp(2rem, 5vw, 3.2rem);
@@ -802,7 +813,7 @@
 <!-- ── Hero ── -->
 <section id="hero">
   <div class="hero-content">
-    <span class="hero-tag">Senior Business Analyst · Process Architecture · AI-First · Regulated Industries</span>
+    <div class="hero-tag">Senior Business Analyst · Process Architecture · AI-First · Regulated Industries</div>
     <h1>I map what you do,<br />improve how you do it,<br /><span>automate where it counts,</span><br />and make your business<br /><span>queryable to AI.</span></h1>
     <p>Twenty years of enterprise transformation across financial services, central government and regulated utilities — from first workshop to governance-ready delivery.</p>
     <div class="hero-ctas">
