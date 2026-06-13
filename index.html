@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Michael Ahmed — Senior Business Analyst & Process Architecture Specialist with 20 years of enterprise transformation experience across financial services, government and regulated operations." />
-  <title>Michael Ahmed — Senior Business Analyst & Process Specialist</title>
+  <meta name="description" content="Flowline Robotics — Process Architecture, AI Enablement and Business Transformation" />
+  <title>Flowline Robotics</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --navy:   #0d1f3c;
       --blue:   #1a4a8a;
@@ -20,796 +18,211 @@
       --white:  #ffffff;
       --border: #d0dce8;
       --gold:   #c8963e;
+      --lb:     #7ec8f0;
     }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--text);
-      background: #060f1e;
-    }
-    /* All sections above the canvas */
-    section { position: relative; z-index: 2; }
-    #capabilities, #case-studies, #user-story, #skills {
-      background: rgba(240,244,248,0.85) !important;
-    }
-    #timeline      { background: rgba(230,238,248,0.85) !important; }
-    #royal-london  { background: rgba(13,31,60,0.90) !important; }
-    #contact       { background: rgba(13,31,60,0.90) !important; }
-    #dashboard     { background: rgba(13,31,60,0.90) !important; }
-    #consumer-duty { background: rgba(240,244,248,0.85) !important; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.7; color: var(--text); background: #060f1e; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    img { max-width: 100%; display: block; }
-
-    /* ── Layout ── */
     .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 80px 0; }
+    .page { display: none; }
+    .page.active { display: block; }
 
     /* ── Nav ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      background: var(--navy);
-      padding: 0 24px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      background: var(--navy); padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      height: 64px; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
     }
-    .nav-brand {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 1px;
-    }
+    .nav-brand { display: flex; flex-direction: column; justify-content: center; gap: 1px; cursor: pointer; }
     .nav-brand-name {
-      font-size: 17px;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: transparent;
+      font-size: 18px; font-weight: 900; letter-spacing: 0.06em;
+      text-transform: uppercase; color: transparent;
       background: linear-gradient(180deg, #ffffff 0%, #a8c8e8 40%, #6ea8d0 70%, #3a7ab8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      text-shadow: none;
+      -webkit-background-clip: text; background-clip: text;
       filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.4));
       line-height: 1.1;
     }
     .nav-brand-sub {
-      font-size: 9px;
-      font-weight: bold;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: transparent;
+      font-size: 9px; font-weight: bold; letter-spacing: 0.18em;
+      text-transform: uppercase; color: transparent;
       background: linear-gradient(180deg, #7ec8f0 0%, #2e7fc1 60%, #1a5a9a 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-      line-height: 1;
+      -webkit-background-clip: text; background-clip: text;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); line-height: 1;
     }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links { display: flex; gap: 4px; list-style: none; align-items: center; }
     .nav-links a {
-      color: rgba(255,255,255,0.82);
-      font-size: 14px;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
+      color: rgba(255,255,255,0.82); font-size: 14px; letter-spacing: 0.03em;
+      padding: 6px 12px; border-radius: 4px; transition: all 0.2s; display: block; cursor: pointer;
     }
-    .nav-links a:hover { color: var(--white); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background: rgba(255,255,255,0.08); text-decoration: none; }
+    .nav-linkedin { color: var(--lb) !important; border: 1px solid rgba(126,200,240,0.3); }
+    .nav-linkedin:hover { background: rgba(126,200,240,0.1) !important; }
+
+    /* ── Page wrapper ── */
+    .page-wrapper { padding-top: 64px; }
+    section { padding: 80px 0; position: relative; z-index: 2; }
+    .section-light { background: rgba(240,244,248,0.92); }
+    .section-grey  { background: rgba(230,238,248,0.92); }
+    .section-dark  { background: rgba(13,31,60,0.93); }
+    .section-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin-bottom: 10px; }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); color: var(--navy); margin-bottom: 14px; line-height: 1.25; }
+    .section-title-light { color: var(--white); }
+    .section-intro { font-size: 17px; color: var(--muted); max-width: 640px; margin-bottom: 48px; line-height: 1.7; }
+    .section-intro-light { color: rgba(255,255,255,0.72); }
 
     /* ── Hero ── */
     #hero {
       min-height: 100vh;
       background: linear-gradient(150deg, #060f1e 0%, var(--navy) 35%, var(--blue) 70%, var(--accent) 100%);
-      display: flex; align-items: center;
-      padding: 100px 24px 80px;
-      position: relative;
-      overflow: hidden;
+      display: flex; align-items: center; padding: 100px 24px 80px;
+      position: relative; overflow: hidden; z-index: 1;
     }
-    /* Grid lines */
     #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(46,127,193,0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(46,127,193,0.10) 1px, transparent 1px);
-      background-size: 52px 52px;
-      pointer-events: none;
-      z-index: 0;
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(46,127,193,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(46,127,193,0.10) 1px, transparent 1px);
+      background-size: 52px 52px; pointer-events: none; z-index: 0;
     }
-    /* Glow spots + circuit SVG overlay */
-    #hero::after {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 15% 55%, rgba(14,165,196,0.13) 0%, transparent 45%),
-        radial-gradient(circle at 80% 15%, rgba(46,127,193,0.16) 0%, transparent 38%),
-        radial-gradient(circle at 65% 80%, rgba(26,74,138,0.22) 0%, transparent 40%),
-        radial-gradient(circle at 40% 30%, rgba(14,165,196,0.07) 0%, transparent 30%);
-      pointer-events: none;
-      z-index: 0;
+    .circuit-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    .hero-content { position: relative; max-width: 820px; z-index: 2; }
+    .hero-brand {
+      font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 900; letter-spacing: 0.04em;
+      text-transform: uppercase; color: transparent;
+      background: linear-gradient(180deg, #ffffff 0%, #a8c8e8 35%, #6ea8d0 65%, #2e6db8 100%);
+      -webkit-background-clip: text; background-clip: text;
+      filter: drop-shadow(0 3px 2px rgba(0,0,0,0.7)) drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+      line-height: 1.05; margin-bottom: 6px;
     }
-    /* Animated circuit traces — inside hero, absolute */
-    .circuit-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0; pointer-events: none;
+    .hero-brand-sub {
+      font-size: clamp(0.85rem, 2vw, 1.2rem); font-weight: bold; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--lb);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5); margin-bottom: 28px;
     }
-    .hero-content { position: relative; max-width: 720px; z-index: 2; }
-    .hero-tag {
-      display: block;
-      font-size: clamp(14px, 2vw, 22px);
-      white-space: nowrap;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #7ec8f0;
-      text-shadow:
-        0 2px 0 rgba(0,0,0,0.7),
-        0 4px 10px rgba(0,0,0,0.5);
-      margin-bottom: 28px;
-      line-height: 1.15;
+    .hero-tagline {
+      font-size: clamp(13px, 1.6vw, 18px); font-weight: bold; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--lb); white-space: nowrap; margin-bottom: 28px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    /* Fade-in animation */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero-tag    { animation: fadeUp 0.7s ease both; animation-delay: 0.1s; }
-    #hero h1     { animation: fadeUp 0.7s ease both; animation-delay: 0.35s; }
-    #hero p      { animation: fadeUp 0.7s ease both; animation-delay: 0.55s; }
-    .hero-ctas   { animation: fadeUp 0.7s ease both; animation-delay: 0.72s; }
-    .hero-stats  { animation: fadeUp 0.7s ease both; animation-delay: 0.88s; }
-
-    #hero h1 {
-      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-      color: var(--white);
-      line-height: 1.18;
-      margin-bottom: 24px;
-      font-weight: 900;
-      letter-spacing: -0.01em;
-    }
-    #hero h1 span {
-      color: #7ec8f0;
-      text-shadow: 0 0 32px rgba(126,200,240,0.45);
-    }
-    #hero p {
-      font-size: 18px;
-      color: rgba(255,255,255,0.85);
-      max-width: 620px;
-      margin-bottom: 36px;
-      line-height: 1.7;
-    }
+    #hero h1 { font-size: clamp(2rem, 5vw, 3.6rem); color: var(--white); line-height: 1.18; margin-bottom: 32px; font-weight: 900; }
+    #hero h1 span { color: var(--lb); text-shadow: 0 0 32px rgba(126,200,240,0.45); }
     .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn {
-      display: inline-block;
-      padding: 13px 28px;
-      border-radius: 4px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.02em;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #2e7fc1 0%, #1a4a8a 100%);
-      color: var(--white);
-      border: 1px solid rgba(126,200,240,0.4);
-      box-shadow: 0 4px 15px rgba(46,127,193,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-primary::after {
-      content: ' →';
-      font-size: 16px;
-    }
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #3a8fd4 0%, #2259a8 100%);
-      box-shadow: 0 6px 22px rgba(46,127,193,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-    .btn-outline {
-      background: linear-gradient(135deg, rgba(126,200,240,0.15) 0%, rgba(46,127,193,0.25) 100%);
-      border: 1px solid rgba(126,200,240,0.5);
-      color: #7ec8f0;
-      box-shadow: 0 4px 15px rgba(126,200,240,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .btn-outline::after {
-      content: ' →';
-      font-size: 16px;
-    }
-    .btn-outline:hover {
-      background: linear-gradient(135deg, rgba(126,200,240,0.25) 0%, rgba(46,127,193,0.4) 100%);
-      border-color: rgba(126,200,240,0.8);
-      box-shadow: 0 6px 22px rgba(126,200,240,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
 
-    /* Frosted glass stat cards */
-    .hero-stats {
-      display: flex; gap: 16px; flex-wrap: wrap;
-      margin-top: 52px;
-      padding-top: 0;
-    }
-    .hero-stat {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-radius: 10px;
-      padding: 18px 22px;
-      text-align: left;
-      transition: background 0.25s, transform 0.25s;
-      width: 180px;
-      flex: 0 0 180px;
-    }
-    .hero-stat:hover {
-      background: rgba(255,255,255,0.12);
-      transform: translateY(-3px);
-    }
-    .hero-stat .num {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #7ec8f0;
-      line-height: 1;
-      text-shadow: 0 0 20px rgba(126,200,240,0.4);
-    }
-    .hero-stat .label {
-      font-size: 12px;
-      color: rgba(255,255,255,0.62);
-      margin-top: 6px;
-      line-height: 1.45;
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+    .fade-1 { animation: fadeUp 0.7s ease both 0.1s; }
+    .fade-2 { animation: fadeUp 0.7s ease both 0.3s; }
+    .fade-3 { animation: fadeUp 0.7s ease both 0.5s; }
+    .fade-4 { animation: fadeUp 0.7s ease both 0.65s; }
+    .fade-5 { animation: fadeUp 0.7s ease both 0.8s; }
 
-    /* ── Section headers ── */
-    .section-label {
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
-      color: var(--navy);
-      margin-bottom: 14px;
-      line-height: 1.25;
-    }
-    .section-intro {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 640px;
-      margin-bottom: 48px;
-      line-height: 1.7;
-    }
+    /* Buttons */
+    .btn { display: inline-block; padding: 13px 28px; border-radius: 4px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em; }
+    .btn-primary { background: linear-gradient(135deg, #2e7fc1 0%, #1a4a8a 100%); color: var(--white); border: 1px solid rgba(126,200,240,0.4); box-shadow: 0 4px 15px rgba(46,127,193,0.45), inset 0 1px 0 rgba(255,255,255,0.15); }
+    .btn-primary::after { content: ' →'; font-size: 16px; }
+    .btn-primary:hover { background: linear-gradient(135deg, #3a8fd4 0%, #2259a8 100%); box-shadow: 0 6px 22px rgba(46,127,193,0.6); transform: translateY(-2px); text-decoration: none; }
+    .btn-outline { background: linear-gradient(135deg, rgba(126,200,240,0.15) 0%, rgba(46,127,193,0.25) 100%); border: 1px solid rgba(126,200,240,0.5); color: var(--lb); box-shadow: 0 4px 15px rgba(126,200,240,0.2); }
+    .btn-outline::after { content: ' →'; font-size: 16px; }
+    .btn-outline:hover { background: linear-gradient(135deg, rgba(126,200,240,0.25) 0%, rgba(46,127,193,0.4) 100%); border-color: rgba(126,200,240,0.8); transform: translateY(-2px); text-decoration: none; }
 
-    /* ── Capabilities grid ── */
-    .caps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 24px;
-    }
-    .cap-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 28px 26px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
+    /* Cards */
+    .caps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+    .cap-card { background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 28px 26px; transition: box-shadow 0.2s, transform 0.2s; }
     .cap-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .cap-icon {
-      width: 44px; height: 44px;
-      background: var(--light);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px;
-      font-size: 22px;
-    }
-    .cap-card h3 {
-      font-size: 16px;
-      color: var(--navy);
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    .cap-card p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    .cap-icon { width: 44px; height: 44px; background: var(--light); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 22px; }
+    .cap-card h3 { font-size: 16px; color: var(--navy); margin-bottom: 10px; font-weight: bold; }
+    .cap-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
-    /* ── Featured Case Study: Royal London ── */
-    #royal-london { background: var(--navy); }
-    #royal-london .section-label { color: var(--gold); }
-    #royal-london .section-title { color: var(--white); }
-    #royal-london .section-intro { color: rgba(255,255,255,0.72); }
-    .rl-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-    @media (max-width: 700px) { .rl-layout { grid-template-columns: 1fr; } }
-    .rl-panel {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 28px;
-    }
-    .rl-panel h3 {
-      font-size: 15px;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 18px;
-      font-weight: bold;
-    }
-    .rl-panel ul { list-style: none; }
-    .rl-panel ul li {
-      color: rgba(255,255,255,0.82);
-      font-size: 14.5px;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-left: 20px;
-      position: relative;
-      line-height: 1.55;
-    }
-    .rl-panel ul li:last-child { border-bottom: none; }
-    .rl-panel ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); }
-    .rl-metric {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 0;
-    }
-    .metric-box {
-      background: rgba(255,255,255,0.08);
-      border-radius: 6px;
-      padding: 18px 16px;
-      text-align: center;
-    }
-    .metric-box .num {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--white);
-      line-height: 1;
-    }
-    .metric-box .lbl {
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 6px;
-      line-height: 1.4;
-    }
-
-    /* ── Consumer Duty ── */
-    .cd-banner {
-      background: linear-gradient(135deg, #0d3b6e 0%, #1a5aa0 100%);
-      border-radius: 8px;
-      padding: 32px 36px;
-      margin-top: 40px;
-      border-left: 5px solid var(--gold);
-    }
-    .cd-banner h3 {
-      color: var(--gold);
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-    .cd-banner p {
-      color: rgba(255,255,255,0.85);
-      font-size: 15px;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .cd-pillars {
-      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px;
-    }
-    .cd-pill {
-      background: rgba(200,150,62,0.2);
-      border: 1px solid rgba(200,150,62,0.5);
-      color: var(--gold);
-      font-size: 13px;
-      padding: 5px 14px;
-      border-radius: 20px;
-    }
-
-    /* ── Consumer Duty four outcomes grid ── */
-    #consumer-duty { background: var(--white); }
-    .cd-outcomes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 24px;
-      margin-top: 8px;
-    }
-    .cd-outcome-card {
-      border-radius: 8px;
-      padding: 28px 24px;
-      border-top: 4px solid var(--gold);
-      background: var(--grey);
-      border: 1px solid var(--border);
-      border-top: 4px solid var(--gold);
-    }
-    .cd-outcome-card .outcome-num {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .cd-outcome-card h3 {
-      font-size: 16px;
-      color: var(--navy);
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-    .cd-outcome-card .fca-def {
-      font-size: 13px;
-      color: var(--muted);
-      font-style: italic;
-      margin-bottom: 14px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-      line-height: 1.6;
-    }
+    /* Consumer Duty */
+    .cd-outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+    .cd-outcome-card { border-radius: 8px; padding: 28px 24px; background: var(--grey); border: 1px solid var(--border); border-top: 4px solid var(--gold); }
+    .cd-outcome-card .outcome-num { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: bold; margin-bottom: 8px; }
+    .cd-outcome-card h3 { font-size: 16px; color: var(--navy); margin-bottom: 12px; font-weight: bold; }
+    .cd-outcome-card .fca-def { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); line-height: 1.6; }
     .cd-outcome-card ul { list-style: none; }
-    .cd-outcome-card ul li {
-      font-size: 14px;
-      color: var(--text);
-      padding: 6px 0 6px 20px;
-      position: relative;
-      line-height: 1.55;
-      border-bottom: 1px solid var(--border);
-    }
+    .cd-outcome-card ul li { font-size: 14px; color: var(--text); padding: 6px 0 6px 20px; position: relative; line-height: 1.55; border-bottom: 1px solid var(--border); }
     .cd-outcome-card ul li:last-child { border-bottom: none; }
     .cd-outcome-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
 
-    /* ── Additional Case Studies ── */
-    #case-studies { background: var(--grey); }
-    .cs-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
+    /* Royal London */
+    .rl-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    @media (max-width: 700px) { .rl-layout { grid-template-columns: 1fr; } }
+    .rl-panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 28px; }
+    .rl-panel h3 { font-size: 15px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: bold; }
+    .rl-panel ul { list-style: none; }
+    .rl-panel ul li { color: rgba(255,255,255,0.82); font-size: 14.5px; padding: 8px 0 8px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); position: relative; line-height: 1.55; }
+    .rl-panel ul li:last-child { border-bottom: none; }
+    .rl-panel ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); }
+    .rl-metric { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .metric-box { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 18px 16px; text-align: center; }
+    .metric-box .num { font-size: 2rem; font-weight: bold; color: var(--white); line-height: 1; }
+    .metric-box .lbl { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 6px; line-height: 1.4; }
+
+    /* Case Studies */
+    .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
     @media (max-width: 700px) { .cs-grid { grid-template-columns: 1fr; } }
-    .cs-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .cs-header {
-      background: var(--navy);
-      padding: 22px 26px;
-    }
-    .cs-header .cs-org {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-    .cs-header h3 {
-      font-size: 17px;
-      color: var(--white);
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-    .cs-header .cs-meta {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-    }
+    .cs-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .cs-header { background: var(--navy); padding: 22px 26px; }
+    .cs-header .cs-org { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
+    .cs-header h3 { font-size: 17px; color: var(--white); line-height: 1.3; margin-bottom: 4px; }
+    .cs-header .cs-meta { font-size: 13px; color: rgba(255,255,255,0.55); }
     .cs-body { padding: 24px 26px; }
     .cs-section { margin-bottom: 20px; }
-    .cs-section h4 {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+    .cs-section h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: bold; margin-bottom: 10px; }
     .cs-section ul { list-style: none; }
-    .cs-section ul li {
-      font-size: 14px;
-      color: var(--text);
-      padding: 5px 0 5px 18px;
-      position: relative;
-      line-height: 1.55;
-      border-bottom: 1px solid var(--border);
-    }
+    .cs-section ul li { font-size: 14px; color: var(--text); padding: 5px 0 5px 18px; position: relative; line-height: 1.55; border-bottom: 1px solid var(--border); }
     .cs-section ul li:last-child { border-bottom: none; }
     .cs-section ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
     .cs-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-    .cs-tag {
-      background: var(--light);
-      color: var(--blue);
-      font-size: 12px;
-      padding: 3px 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
+    .cs-tag { background: var(--light); color: var(--blue); font-size: 12px; padding: 3px 10px; border-radius: 12px; border: 1px solid var(--border); }
 
-    /* ── User Story ── */
-    #user-story { background: var(--white); }
-    .story-card {
-      background: var(--grey);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 36px 40px;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-    .story-badge {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--white);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 3px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-    .story-card blockquote {
-      font-size: 17px;
-      color: var(--navy);
-      font-style: italic;
-      border-left: 4px solid var(--accent);
-      padding-left: 20px;
-      margin: 20px 0;
-      line-height: 1.75;
-    }
-    .story-section { margin-top: 24px; }
-    .story-section h4 {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .story-section ul { list-style: none; }
-    .story-section ul li {
-      font-size: 15px;
-      color: var(--text);
-      padding: 6px 0 6px 20px;
-      position: relative;
-      border-bottom: 1px solid var(--border);
-      line-height: 1.55;
-    }
-    .story-section ul li:last-child { border-bottom: none; }
-    .story-section ul li::before { content: '✓'; position: absolute; left: 0; color: #2a9e5a; font-weight: bold; }
-    .story-ac { background: #f0f7f0; border-radius: 6px; padding: 14px 18px; margin-top: 6px; }
-    .story-ac li::before { content: '✓'; color: #2a9e5a; }
+    /* About approach cards */
+    .approach-card { display: flex; gap: 14px; align-items: flex-start; padding: 16px; background: var(--grey); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 12px; }
+    .approach-card .icon { font-size: 24px; }
+    .approach-card h4 { font-weight: bold; color: var(--navy); margin-bottom: 4px; }
+    .approach-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-    /* ── Career Timeline ── */
-    #timeline { background: var(--grey); }
+    /* Timeline */
     .timeline { position: relative; max-width: 860px; margin: 0 auto; }
-    .timeline::before {
-      content: '';
-      position: absolute; left: 140px; top: 0; bottom: 0;
-      width: 2px;
-      background: var(--border);
-    }
-    @media (max-width: 600px) { .timeline::before { left: 20px; } }
-    .tl-item {
-      display: flex; gap: 0; margin-bottom: 36px; position: relative;
-    }
-    .tl-date {
-      width: 140px; min-width: 140px;
-      text-align: right;
-      padding-right: 24px;
-      padding-top: 2px;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: bold;
-      line-height: 1.4;
-    }
-    .tl-dot {
-      width: 14px; height: 14px;
-      min-width: 14px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin-top: 4px;
-      position: relative;
-      z-index: 1;
-      border: 3px solid var(--white);
-      box-shadow: 0 0 0 2px var(--accent);
-    }
+    .timeline::before { content: ''; position: absolute; left: 140px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.15); }
+    .tl-item { display: flex; gap: 0; margin-bottom: 36px; position: relative; }
+    .tl-date { width: 140px; min-width: 140px; text-align: right; padding-right: 24px; padding-top: 2px; font-size: 13px; color: rgba(255,255,255,0.45); font-weight: bold; line-height: 1.4; }
+    .tl-dot { width: 14px; height: 14px; min-width: 14px; background: var(--accent); border-radius: 50%; margin-top: 4px; position: relative; z-index: 1; border: 3px solid rgba(13,31,60,0.9); box-shadow: 0 0 0 2px var(--accent); }
     .tl-dot.featured { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
-    .tl-body {
-      padding-left: 20px;
-      flex: 1;
-    }
-    .tl-body h3 {
-      font-size: 16px;
-      color: var(--navy);
-      margin-bottom: 4px;
-    }
-    .tl-body .co {
-      font-size: 13px;
-      color: var(--accent);
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .tl-body p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .tl-body { padding-left: 20px; flex: 1; }
+    .tl-body h3 { font-size: 16px; color: var(--white); margin-bottom: 4px; }
+    .tl-body .co { font-size: 13px; color: var(--accent); font-weight: bold; margin-bottom: 8px; }
+    .tl-body p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
     .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .tl-tag {
-      background: var(--light);
-      color: var(--blue);
-      font-size: 12px;
-      padding: 3px 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-    @media (max-width: 600px) {
-      .tl-date { display: none; }
-      .timeline::before { left: 20px; }
-    }
+    .tl-tag { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); font-size: 12px; padding: 3px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); }
 
-    /* ── Skills Bar ── */
-    #skills { background: var(--white); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px 48px;
-    }
-    @media (max-width: 640px) { .skills-grid { grid-template-columns: 1fr; } }
-    .skill-row { margin-bottom: 18px; }
-    .skill-row .name {
-      display: flex; justify-content: space-between;
-      font-size: 14px; color: var(--text); margin-bottom: 6px;
-    }
-    .skill-row .name span { color: var(--muted); }
-    .bar-bg {
-      background: var(--border);
-      border-radius: 4px;
-      height: 8px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      background: linear-gradient(90deg, var(--blue), var(--accent));
-    }
-    .skills-tags { margin-top: 40px; }
-    .skills-tags h4 { font-size: 15px; color: var(--navy); margin-bottom: 14px; font-weight: bold; }
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      background: var(--light);
-      color: var(--blue);
-      font-size: 13px;
-      padding: 5px 14px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-
-    /* ── Sectors ── */
-    .sectors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
-    }
-    .sector-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 20px;
-      text-align: center;
-    }
-    .sector-card .icon { font-size: 28px; margin-bottom: 10px; }
-    .sector-card h4 { font-size: 14px; color: var(--navy); font-weight: bold; }
-
-    /* ── Contact ── */
-    #contact { background: var(--navy); }
-    #contact .section-label { color: var(--gold); }
-    #contact .section-title { color: var(--white); }
-    #contact .section-intro { color: rgba(255,255,255,0.72); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
     @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
-    .contact-item {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 6px;
-      padding: 24px;
-    }
-    .contact-item .ci-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 8px;
-    }
-    .contact-item .ci-value {
-      font-size: 17px;
-      color: var(--white);
-      font-weight: bold;
-    }
-    .contact-item .ci-value a { color: #7ec8f0; }
-    .contact-item .ci-note {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      margin-top: 4px;
-    }
-    .avail-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(42,158,90,0.2);
-      border: 1px solid rgba(42,158,90,0.5);
-      color: #5de09a;
-      font-size: 14px;
-      padding: 8px 18px;
-      border-radius: 20px;
-      margin-top: 32px;
-    }
-    .avail-dot {
-      width: 8px; height: 8px;
-      background: #5de09a;
-      border-radius: 50%;
-      animation: pulse 1.8s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    .contact-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 24px; }
+    .contact-item .ci-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+    .contact-item .ci-value { font-size: 17px; color: var(--white); font-weight: bold; }
+    .contact-item .ci-value a { color: var(--lb); }
+    .contact-item .ci-note { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .avail-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(42,158,90,0.2); border: 1px solid rgba(42,158,90,0.5); color: #5de09a; font-size: 14px; padding: 8px 18px; border-radius: 20px; margin-top: 32px; }
+    .avail-dot { width: 8px; height: 8px; background: #5de09a; border-radius: 50%; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    /* ── Footer ── */
-    footer {
-      background: #080f1f;
-      color: rgba(255,255,255,0.45);
-      text-align: center;
-      padding: 24px;
-      font-size: 13px;
-      position: relative; z-index: 20;
-    }
-
-    /* ── Responsive nav ── */
-    @media (max-width: 560px) {
-      .nav-links { gap: 16px; }
-      .nav-links a { font-size: 13px; }
-    }
-
-    /* ── Findings & Actions Dashboard ── */
-    #dashboard { background: var(--navy); }
-    #dashboard .section-label { color: #0ea5c4; }
-    #dashboard .section-title { color: var(--white); }
-    #dashboard .section-intro { color: rgba(255,255,255,0.65); }
-    .dash-frame {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 10px; overflow: hidden;
-    }
-    .dash-header {
-      background: rgba(0,0,0,0.2);
-      border-bottom: 2px solid rgba(46,127,193,0.4);
-      padding: 16px 24px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    }
+    /* Dashboard */
+    .dash-frame { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; overflow: hidden; }
+    .dash-header { background: rgba(0,0,0,0.2); border-bottom: 2px solid rgba(46,127,193,0.4); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .dash-header-left h2 { font-size: 18px; color: var(--white); font-weight: bold; }
     .dash-header-left p { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
-    .dash-header-right { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; text-transform: uppercase; }
-    .kpi-strip {
-      display: grid; grid-template-columns: repeat(5, 1fr);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    @media (max-width: 640px) { .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
+    .kpi-strip { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    @media (max-width:640px) { .kpi-strip { grid-template-columns: repeat(3,1fr); } }
     .kpi-box { padding: 18px 16px; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
     .kpi-box:last-child { border-right: none; }
     .kpi-box .kv { font-size: 2rem; font-weight: bold; color: var(--white); line-height: 1; }
-    .kpi-box .kv.blue { color: #7ec8f0; }
+    .kpi-box .kv.blue { color: var(--lb); }
     .kpi-box .kv.green { color: #5de09a; }
     .kpi-box .kl { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.35; }
     .dash-body { display: grid; grid-template-columns: 1fr 1fr 1fr; }
-    @media (max-width: 900px) { .dash-body { grid-template-columns: 1fr; } }
+    @media (max-width:900px) { .dash-body { grid-template-columns: 1fr; } }
     .dash-panel { padding: 20px; border-right: 1px solid rgba(255,255,255,0.08); }
     .dash-panel:last-child { border-right: none; }
     .dash-panel-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -828,820 +241,390 @@
     .opp-tag.strategic { background: rgba(46,127,193,0.15); border-left: 3px solid var(--accent); color: rgba(255,255,255,0.8); }
     .opp-tag strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
     .opp-tag.tactical strong { color: #d07ee0; }
-    .opp-tag.strategic strong { color: #7ec8f0; }
+    .opp-tag.strategic strong { color: var(--lb); }
     .dash-summary { background: rgba(46,127,193,0.08); border-top: 1px solid rgba(46,127,193,0.2); padding: 14px 20px; }
-    .dash-summary h4 { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; color: #7ec8f0; margin-bottom: 8px; }
+    .dash-summary h4 { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; color: var(--lb); margin-bottom: 8px; }
     .dash-summary ul { list-style: none; }
     .dash-summary ul li { font-size: 13px; color: rgba(255,255,255,0.68); padding: 3px 0 3px 16px; position: relative; }
     .dash-summary ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
-    .dash-date { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 10px; }
+
+    footer { background: #080f1f; color: rgba(255,255,255,0.45); text-align: center; padding: 24px; font-size: 13px; position: relative; z-index: 2; }
+    @media (max-width:560px) { .nav-links { gap: 2px; } .nav-links a { font-size: 12px; padding: 5px 8px; } }
   </style>
 </head>
 <body>
 
 <!-- ── Navigation ── -->
 <nav>
-  <div class="nav-brand">
-    <span class="nav-brand-name">Michael Ahmed</span>
-    <span class="nav-brand-sub">Senior Business Analyst</span>
+  <div class="nav-brand" onclick="showPage('home')">
+    <span class="nav-brand-name">Flowline Robotics</span>
+    <span class="nav-brand-sub">Process Architecture · AI Enablement</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#capabilities">Capabilities</a></li>
-    <li><a href="#royal-london">Royal London</a></li>
-    <li><a href="#consumer-duty">Consumer Duty</a></li>
-    <li><a href="#case-studies">Case Studies</a></li>
-    <li><a href="#dashboard">Findings Tracker</a></li>
-    <li><a href="#timeline">Experience</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="https://www.linkedin.com/in/michael-ahmed-932a9a/" target="_blank" rel="noopener" style="color:#7ec8f0;">LinkedIn ↗</a></li>
+    <li><a onclick="showPage('home')" id="nav-home">🏠</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('casestudies')" id="nav-casestudies">Case Studies</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a href="https://www.linkedin.com/in/michael-ahmed-932a9a/" target="_blank" rel="noopener" class="nav-linkedin">LinkedIn ↗</a></li>
   </ul>
 </nav>
 
-<!-- ── Hero ── -->
-<section id="hero">
-  <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
-  <div class="hero-content">
-    <div class="hero-tag">Process Architecture · AI-First · Regulated Industries</div>
-    <h1>I map what you do,<br />improve how you do it,<br /><span>automate where it counts,</span><br />and make your business<br /><span>queryable to AI.</span></h1>
-    <p>Twenty years of enterprise transformation across financial services, central government and regulated utilities — from first workshop to governance-ready delivery.</p>
-    <div class="hero-ctas">
-      <a href="#royal-london" class="btn btn-primary">See Royal London Case Study</a>
-      <a href="#contact" class="btn btn-outline">Get in touch</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="num">19</div>
-        <div class="label">End-to-end BPMN process maps delivered</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">~57</div>
-        <div class="label">SOPs rationalised at Royal London</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">60–70%</div>
-        <div class="label">Typical SOP volume reduction</div>
+<!-- ══════════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <section id="hero">
+    <canvas class="circuit-canvas" id="circuitCanvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-brand fade-1">Flowline Robotics</div>
+      <div class="hero-brand-sub fade-2">Process Architecture · AI Enablement · Business Transformation</div>
+      <div class="hero-tagline fade-3">Process Architecture · AI-First · Regulated Industries</div>
+      <h1 class="fade-4">
+        We map what you do,<br />
+        improve how you do it,<br />
+        <span>automate where it counts,</span><br />
+        and make your business<br />
+        <span>queryable to AI.</span>
+      </h1>
+      <div class="hero-ctas fade-5">
+        <a onclick="showPage('casestudies')" class="btn btn-primary">See Our Case Studies</a>
+        <a onclick="showPage('contact')" class="btn btn-outline">Get in touch</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<!-- ── Capabilities ── -->
-<section id="capabilities">
-  <div class="container">
-    <div class="section-label">What I do</div>
-    <h2 class="section-title">Core Capabilities</h2>
-    <p class="section-intro">A structured, outcome-focused analytical practice — bridging business and technology across every stage of transformation, from requirements through to governance-ready delivery.</p>
-    <div class="caps-grid">
-      <div class="cap-card">
-        <div class="cap-icon">🗺️</div>
-        <h3>Process Architecture &amp; BPMN 2.0 Mapping</h3>
-        <p>End-to-end As-Is and To-Be process design at Level 3–5 using BPMN 2.0. Establishing scalable process taxonomies, ownership models and structured improvement pipelines.</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">📋</div>
-        <h3>SOP Rationalisation &amp; Document Control</h3>
-        <p>Auditing, rationalising and rebuilding SOP libraries — typically achieving 60–70% volume reduction whilst improving quality, consistency and traceability. Full lifecycle document control: versioning, approvals, publishing and review cadence.</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">🔍</div>
-        <h3>Requirements Analysis &amp; Target-State Design</h3>
-        <p>Translating strategy into structured business and functional requirements. GAP analysis, user stories, acceptance criteria, and governance-ready documentation enabling stakeholder sign-off and consistent adoption.</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">🤝</div>
-        <h3>Stakeholder Elicitation &amp; Workshop Facilitation</h3>
-        <p>Facilitating structured discovery workshops across business, technology and compliance stakeholders. Translating complex domain knowledge into clear findings registers, decision logs and leadership-facing narratives.</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">🤖</div>
-        <h3>AI, RPA &amp; Digital Enablement</h3>
-        <p>Identifying automation and AI/RPA opportunities within process landscapes. Producing business cases and supporting structured handover into technology delivery — within insurance, financial services and regulated utilities environments.</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">⚖️</div>
-        <h3>Regulatory &amp; Governance Alignment</h3>
-        <p>Embedding compliance and audit readiness directly into process architecture — across Consumer Duty, GDPR, FSA regulatory frameworks, and PRINCE2-governed programmes. Building governance structures that survive handover.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Royal London Case Study ── -->
-<section id="royal-london">
-  <div class="container">
-    <div class="section-label">Featured Case Study</div>
-    <h2 class="section-title">Royal London Group — Group-Wide Operations Transformation</h2>
-    <p class="section-intro">Mar 2025 – May 2026 · Life &amp; Pensions · Regulated Insurance Environment · Customer Journey Analyst / Senior Business Analyst</p>
-
-    <div class="rl-layout">
-      <div>
-        <div class="rl-panel">
-          <h3>The Challenge</h3>
-          <ul>
-            <li>No standardised process architecture across 32 Level 3 customer operations processes (142 Level 4 processes) across the Group</li>
-            <li>Fragmented, inconsistent SOP estate — circa 57+ documents across the Update Plan Details L3 process alone</li>
-            <li>No scalable process ownership model or continuous improvement pipeline</li>
-            <li>Regulatory pressure to demonstrate clear, auditable customer outcomes under Consumer Duty</li>
-            <li>Ambition to position for RPA, AI and digital transformation but no structured process baseline to build from</li>
-          </ul>
-        </div>
-        <div class="rl-panel" style="margin-top:20px">
-          <h3>What I Delivered</h3>
-          <ul>
-            <li>Personally led the L3 process: <strong style="color:rgba(255,255,255,0.95)">Update Plan Details</strong> — delivering 19 end-to-end BPMN 2.0 Level 4 process maps and 57 Level 5 processes within the taxonomy: Customer Account Management → Execute Customer Instruction → Update Plan Details</li>
-            <li>Designed target-state operating model: As-Is → To-Be across all 19 Level 4 processes including Add/Update Beneficiary, Change Plan Cover, Cancellations, Change of Policy Ownership, Add/Update Trust and more</li>
-            <li>Rationalised ~57 SOPs within Update Plan Details, achieving 60–70% volume reduction with improved quality and consistency</li>
-            <li>Defined named process ownership, review cadences and a findings register — creating a continuous improvement pipeline</li>
-            <li>Produced release and readiness packs; maintained versioned change log with full audit trail</li>
-            <li>Identified RPA and AI automation opportunities; produced business cases for technology delivery handover</li>
-            <li>Collaborated with risk, compliance and audit teams to ensure regulatory alignment throughout</li>
-          </ul>
+<!-- ══════════════════════════════════════════
+     SERVICES PAGE
+══════════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-wrapper">
+    <section class="section-light">
+      <div class="container">
+        <div class="section-label">What we do</div>
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-intro">A structured, outcome-focused analytical practice — bridging business and technology across every stage of transformation, from requirements through to governance-ready delivery.</p>
+        <div class="caps-grid">
+          <div class="cap-card"><div class="cap-icon">🗺️</div><h3>Process Architecture &amp; BPMN 2.0 Mapping</h3><p>End-to-end As-Is and To-Be process design at Level 3–5 using BPMN 2.0. Establishing scalable process taxonomies, ownership models and structured improvement pipelines.</p></div>
+          <div class="cap-card"><div class="cap-icon">📋</div><h3>SOP Rationalisation &amp; Document Control</h3><p>Auditing, rationalising and rebuilding SOP libraries — typically achieving 60–70% volume reduction whilst improving quality, consistency and traceability. Full lifecycle document control: versioning, approvals, publishing and review cadence.</p></div>
+          <div class="cap-card"><div class="cap-icon">🔍</div><h3>Requirements Analysis &amp; Target-State Design</h3><p>Translating strategy into structured business and functional requirements. GAP analysis, user stories, acceptance criteria, and governance-ready documentation enabling stakeholder sign-off and consistent adoption.</p></div>
+          <div class="cap-card"><div class="cap-icon">🤝</div><h3>Stakeholder Elicitation &amp; Workshop Facilitation</h3><p>Facilitating structured discovery workshops across business, technology and compliance stakeholders. Translating complex domain knowledge into clear findings registers, decision logs and leadership-facing narratives.</p></div>
+          <div class="cap-card"><div class="cap-icon">🤖</div><h3>AI, RPA &amp; Digital Enablement</h3><p>Identifying automation and AI/RPA opportunities within process landscapes. Producing business cases and supporting structured handover into technology delivery — within insurance, financial services and regulated utilities environments.</p></div>
+          <div class="cap-card"><div class="cap-icon">⚖️</div><h3>Regulatory &amp; Governance Alignment</h3><p>Embedding compliance and audit readiness directly into process architecture — across Consumer Duty, GDPR, FCA regulatory frameworks, and PRINCE2-governed programmes. Building governance structures that survive handover.</p></div>
         </div>
       </div>
+    </section>
 
-      <div>
-        <div class="rl-panel">
-          <h3>Outcomes &amp; Impact</h3>
-          <div class="rl-metric">
-            <div class="metric-box">
-              <div class="num">19</div>
-              <div class="lbl">End-to-end BPMN 2.0 Level 4 process maps delivered</div>
-            </div>
-            <div class="metric-box">
-              <div class="num">~57</div>
-              <div class="lbl">SOPs rationalised across Update Plan Details</div>
-            </div>
-            <div class="metric-box">
-              <div class="num">60–70%</div>
-              <div class="lbl">Reduction in SOP document volume</div>
-            </div>
-            <div class="metric-box">
-              <div class="num">32 / 142</div>
-              <div class="lbl">Total L3 / L4 processes in Group taxonomy</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cd-banner">
-          <h3>🏛️ Supporting the FCA's Consumer Duty — Four Consumer Outcomes</h3>
-          <p>The FCA's Consumer Duty (effective July 2023) sets a higher standard of consumer protection. Firms must evidence good outcomes across four specific areas. My process architecture programme at Royal London directly addressed all four — see the dedicated section below for the full breakdown.</p>
-          <div class="cd-pillars" style="margin-top:14px;">
-            <span class="cd-pill">Products &amp; Services</span>
-            <span class="cd-pill">Price &amp; Value</span>
-            <span class="cd-pill">Consumer Understanding</span>
-            <span class="cd-pill">Consumer Support</span>
-          </div>
-          <p style="margin-top:16px; font-size:14px; color:rgba(255,255,255,0.65);">↓ Full mapping against each outcome below</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Consumer Duty: Four Outcomes ── -->
-<section id="consumer-duty">
-  <div class="container">
-    <div class="section-label">Regulatory Alignment</div>
-    <h2 class="section-title">FCA Consumer Duty — The Four Consumer Outcomes</h2>
-    <p class="section-intro">The FCA requires firms to demonstrate good outcomes across four specific areas. Below is a precise mapping of how my process architecture work at Royal London evidenced compliance against each outcome.</p>
-
-    <div class="cd-outcomes-grid">
-
-      <div class="cd-outcome-card">
-        <div class="outcome-num">Outcome 1</div>
-        <h3>Products &amp; Services</h3>
-        <div class="fca-def">FCA requirement: Products and services must be fit for purpose and designed to meet the needs of the target market.</div>
-        <ul>
-          <li>Delivered 19 end-to-end BPMN 2.0 Level 4 process maps within the Update Plan Details L3 process — covering Add/Update Beneficiary, Change Plan Cover, Cancellations, Change of Policy Ownership, Add/Update Trust and 14 further processes — providing documented evidence that each product instruction is executed as designed</li>
-          <li>As-Is / To-Be process mapping across all 19 Level 4 processes identified where operational delivery diverged from product design — creating a structured gap register for remediation</li>
-          <li>Process architecture established a baseline against which product changes could be assessed for operational impact, ensuring new products remain operationally viable before launch</li>
-          <li>Defined process ownership at named individual level, creating clear accountability for ongoing product delivery standards</li>
-        </ul>
-      </div>
-
-      <div class="cd-outcome-card">
-        <div class="outcome-num">Outcome 2</div>
-        <h3>Price &amp; Value</h3>
-        <div class="fca-def">FCA requirement: Firms must ensure the price consumers pay is reasonable relative to the overall benefits of the product or service.</div>
-        <ul>
-          <li>SOP rationalisation (60–70% volume reduction across ~57 documents within Update Plan Details) eliminated duplicate, contradictory and inefficient procedures — directly reducing the operational overhead embedded in product pricing</li>
-          <li>Process efficiency improvements identified through To-Be mapping surfaced opportunities to reduce unit costs in customer operations, supporting fair value assessments</li>
-          <li>RPA and AI automation opportunities identified within process landscape and costed via business cases — enabling the Group to demonstrate a programme of ongoing value improvement to regulators</li>
-          <li>Standardised process documentation created the operational transparency needed to evidence that customer charges reflect genuine operational costs, not inefficiency</li>
-        </ul>
-      </div>
-
-      <div class="cd-outcome-card">
-        <div class="outcome-num">Outcome 3</div>
-        <h3>Consumer Understanding</h3>
-        <div class="fca-def">FCA requirement: Customer communications must be clear, timely and help consumers make informed decisions.</div>
-        <ul>
-          <li>Removal of contradictory guidance across fragmented SOP estates eliminated the risk of agents providing inconsistent or confusing information to customers at key touchpoints</li>
-          <li>Defined 'definition of done' at each process stage — including customer communication steps — ensuring agents know exactly what information must be provided, in what format, and when</li>
-          <li>Workshop findings registers captured where process steps created ambiguity in customer-facing communications, driving targeted remediation</li>
-          <li>Process maps made decision gateways explicit — ensuring complex scenarios (e.g. Group Pensions, Personal Pensions, policy amendments) follow documented pathways with clear customer notification requirements at each branch</li>
-          <li>Standardised processes across cross-functional teams eliminated inconsistency in customer-facing communications at every Update Plan Details touchpoint</li>
-        </ul>
-      </div>
-
-      <div class="cd-outcome-card">
-        <div class="outcome-num">Outcome 4</div>
-        <h3>Consumer Support</h3>
-        <div class="fca-def">FCA requirement: Firms must provide support that meets consumers' needs throughout the product lifecycle.</div>
-        <ul>
-          <li>Standardised end-to-end process maps ensure every customer receives consistent service quality regardless of which team member handles their case — eliminating postcode lottery service delivery</li>
-          <li>Named process ownership and defined review cadences created a continuous improvement pipeline — ensuring support standards evolve as customer needs change, not stagnate</li>
-          <li>Release and readiness packs documented all process changes with clear handover criteria — ensuring frontline teams are equipped to deliver improved support before changes go live</li>
-          <li>Governance structures (findings register, decision log, change log with full audit trail) provide the regulator with auditable evidence that support processes are actively managed and improved</li>
-          <li>Collaboration with risk, compliance and audit teams embedded regulatory oversight directly into process governance — not as a retrospective check, but as a live control</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Additional Case Studies ── -->
-<section id="case-studies">
-  <div class="container">
-    <div class="section-label">Further Case Studies</div>
-    <h2 class="section-title">Selected Engagements</h2>
-    <p class="section-intro">Two earlier programmes that illustrate the depth and breadth of my BA practice — tacit knowledge transfer at Network Rail, and one of the UK's most complex central government data migrations.</p>
-
-    <div class="cs-grid">
-
-      <!-- Network Rail -->
-      <div class="cs-card">
-        <div class="cs-header">
-          <div class="cs-org">Transport &amp; Infrastructure · 2007</div>
-          <h3>Tacit Knowledge Capture &amp; SLA Measurement Programme</h3>
-          <div class="cs-meta">Network Rail, London · Business Process Analyst (Contract) · PRINCE2-governed</div>
-        </div>
-        <div class="cs-body">
-          <div class="cs-section">
-            <h4>The Challenge</h4>
+    <section class="section-dark">
+      <div class="container">
+        <div class="section-label" style="color:#0ea5c4">FCA Consumer Duty</div>
+        <h2 class="section-title section-title-light">Supporting the Four Consumer Outcomes</h2>
+        <p class="section-intro section-intro-light">Our process architecture work directly supports firms in demonstrating compliance with the FCA's Consumer Duty regulation — ensuring customers receive good outcomes across all four pillars.</p>
+        <div class="cd-outcomes-grid">
+          <div class="cd-outcome-card">
+            <div class="outcome-num">Outcome 01</div>
+            <h3>Products &amp; Services</h3>
+            <div class="fca-def">"Firms must ensure products and services meet the needs of customers in the target market."</div>
             <ul>
-              <li>Critical SLA measurement logic for Information Management departments existed only in the head of a long-tenured SME who was resistant to knowledge transfer</li>
-              <li>No documented process for SLA reporting across any IM department — creating audit risk and single-point-of-failure dependency</li>
-              <li>Organisation needed a PRINCE2-governed programme to standardise and automate reporting before the SME's departure</li>
+              <li>As-Is process mapping to identify product gaps and failure points</li>
+              <li>Target-state design aligned to customer need</li>
+              <li>Process ownership models ensuring accountability</li>
+              <li>Review cadences to maintain ongoing fit</li>
             </ul>
           </div>
-          <div class="cs-section">
-            <h4>What I Delivered</h4>
+          <div class="cd-outcome-card">
+            <div class="outcome-num">Outcome 02</div>
+            <h3>Price &amp; Value</h3>
+            <div class="fca-def">"Firms must ensure the price customers pay is reasonable relative to the overall benefits."</div>
             <ul>
-              <li>Built trust with the reluctant SME through patient, structured elicitation — translating 15+ years of tacit KPI logic into documented, auditable business rules for the first time</li>
-              <li>Produced Visio As-Is swim-lane process diagrams across all IM departments, capturing the full measurement landscape</li>
-              <li>Designed and built an automated, auditable Excel-based KPI model to replace the SME-dependent manual process — with full version control and audit trail</li>
-              <li>Delivered within a PRINCE2 governance framework: stage gates, risk log, change control and stakeholder reporting throughout</li>
+              <li>Cost-driver mapping through end-to-end process analysis</li>
+              <li>Waste and inefficiency identification to support value delivery</li>
+              <li>Automation opportunity mapping to reduce unit costs</li>
+              <li>Findings registers with prioritised improvement actions</li>
             </ul>
           </div>
-          <div class="cs-section">
-            <h4>Key Outcome</h4>
+          <div class="cd-outcome-card">
+            <div class="outcome-num">Outcome 03</div>
+            <h3>Consumer Understanding</h3>
+            <div class="fca-def">"Firms must support customers to make informed decisions about financial products."</div>
             <ul>
-              <li>Eliminated a critical single point of failure — SLA reporting became process-driven, auditable and repeatable rather than person-dependent</li>
-              <li>Delivered a model that was immediately operational and could be maintained by the business without ongoing BA support</li>
+              <li>Customer journey mapping at L3–L5 process level</li>
+              <li>Plain-language SOP rationalisation</li>
+              <li>Decision gateway design ensuring informed consent</li>
+              <li>Communication touchpoint audit and redesign</li>
             </ul>
           </div>
-          <div class="cs-tags">
-            <span class="cs-tag">Tacit Knowledge Transfer</span>
-            <span class="cs-tag">PRINCE2</span>
-            <span class="cs-tag">SLA Measurement</span>
-            <span class="cs-tag">Process Mapping</span>
-            <span class="cs-tag">Stakeholder Elicitation</span>
-            <span class="cs-tag">Audit Readiness</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Halian / Central Government -->
-      <div class="cs-card">
-        <div class="cs-header">
-          <div class="cs-org">Central Government · 2005–2006</div>
-          <h3>Large-Scale HR Data Migration — 42 Legacy Systems to Oracle HRMS</h3>
-          <div class="cs-meta">Halian Consultancy · Business Analyst (Contract) · Pre-cutover data quality lead</div>
-        </div>
-        <div class="cs-body">
-          <div class="cs-section">
-            <h4>The Challenge</h4>
+          <div class="cd-outcome-card">
+            <div class="outcome-num">Outcome 04</div>
+            <h3>Consumer Support</h3>
+            <div class="fca-def">"Firms must provide support that meets the needs of customers throughout the product lifecycle."</div>
             <ul>
-              <li>1,200 civil service employees spread across 42 disparate legacy HR systems — each with different data structures, quality standards and field mappings</li>
-              <li>Zero tolerance for data loss or corruption: employee records, pay, benefits and entitlements had to migrate with 100% integrity</li>
-              <li>One of the most complex data migration programmes of its kind in UK central government at the time</li>
+              <li>End-to-end support journey mapping and gap analysis</li>
+              <li>Escalation and complaints process redesign</li>
+              <li>Vulnerable customer pathway documentation</li>
+              <li>Audit-trail process controls and evidence frameworks</li>
             </ul>
           </div>
-          <div class="cs-section">
-            <h4>What I Delivered</h4>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CASE STUDIES PAGE
+══════════════════════════════════════════ -->
+<div class="page" id="page-casestudies">
+  <div class="page-wrapper">
+    <section class="section-dark">
+      <div class="container">
+        <div class="section-label" style="color:var(--gold)">Featured Case Study</div>
+        <h2 class="section-title section-title-light">Royal London Group — Group-Wide Operations Transformation</h2>
+        <p class="section-intro section-intro-light">Mar 2025 – May 2026 · Life &amp; Pensions · Regulated Insurance Environment · Customer Journey Analyst / Senior Business Analyst</p>
+        <div class="rl-layout">
+          <div>
+            <div class="rl-panel">
+              <h3>The Challenge</h3>
+              <ul>
+                <li>No standardised process architecture across 32 Level 3 customer operations processes (142 Level 4 processes) across the Group</li>
+                <li>Fragmented, inconsistent SOP estate — circa 57+ documents across the Update Plan Details L3 process alone</li>
+                <li>No scalable process ownership model or continuous improvement pipeline</li>
+                <li>Regulatory pressure to demonstrate clear, auditable customer outcomes under Consumer Duty</li>
+                <li>Ambition to position for RPA, AI and digital transformation but no structured process baseline to build from</li>
+              </ul>
+            </div>
+            <div class="rl-panel" style="margin-top:20px">
+              <h3>What We Delivered</h3>
+              <ul>
+                <li>Led the L3 process: <strong style="color:rgba(255,255,255,0.95)">Update Plan Details</strong> — delivering 19 end-to-end BPMN 2.0 Level 4 process maps and 57 Level 5 processes</li>
+                <li>Designed target-state operating model: As-Is → To-Be across all 19 Level 4 processes including Add/Update Beneficiary, Change Plan Cover, Cancellations, Change of Policy Ownership and more</li>
+                <li>Rationalised ~57 SOPs, achieving 60–70% volume reduction with improved quality and consistency</li>
+                <li>Defined named process ownership, review cadences and a findings register — creating a continuous improvement pipeline</li>
+                <li>Produced release and readiness packs; maintained versioned change log with full audit trail</li>
+                <li>Identified RPA and AI automation opportunities; produced business cases for technology delivery handover</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="rl-panel">
+              <h3>Outcomes &amp; Impact</h3>
+              <div class="rl-metric">
+                <div class="metric-box"><div class="num">19</div><div class="lbl">Level 4 BPMN process maps delivered</div></div>
+                <div class="metric-box"><div class="num">57</div><div class="lbl">Level 5 sub-processes mapped</div></div>
+                <div class="metric-box"><div class="num">~57</div><div class="lbl">SOPs rationalised — 60–70% reduction</div></div>
+                <div class="metric-box"><div class="num">28</div><div class="lbl">Findings raised &amp; actioned</div></div>
+              </div>
+            </div>
+            <div class="rl-panel" style="margin-top:20px">
+              <h3>Findings &amp; Actions Tracker</h3>
+              <div class="dash-frame">
+                <div class="dash-header">
+                  <div class="dash-header-left">
+                    <h2>Findings &amp; Actions Tracker</h2>
+                    <p>Royal London · Update Plan Details L3 · Process Improvement Programme 2025</p>
+                  </div>
+                </div>
+                <div class="kpi-strip">
+                  <div class="kpi-box"><div class="kv">28</div><div class="kl">Total Findings</div></div>
+                  <div class="kpi-box"><div class="kv green">19</div><div class="kl">Reviews Complete</div></div>
+                  <div class="kpi-box"><div class="kv blue">68%</div><div class="kl">Completion Rate</div></div>
+                  <div class="kpi-box"><div class="kv blue">31</div><div class="kl">Total L3 Processes</div></div>
+                  <div class="kpi-box"><div class="kv blue">142</div><div class="kl">Total L4 Processes</div></div>
+                </div>
+                <div class="dash-body">
+                  <div class="dash-panel">
+                    <div class="dash-panel-title">Review Progress</div>
+                    <div class="chart-wrap"><canvas id="mappingChart"></canvas></div>
+                  </div>
+                  <div class="dash-panel">
+                    <div class="dash-panel-title">Findings by Category</div>
+                    <div class="cat-bars">
+                      <div class="cat-row"><div class="cat-label"><span>Compliance Risk</span><span>6</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:100%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>SOP Inconsistency</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:83%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>Process Gap</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:83%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>Automation Opp.</span><span>4</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:67%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>Document Control</span><span>4</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:67%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>Ownership Gap</span><span>3</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:50%"></div></div></div>
+                      <div class="cat-row"><div class="cat-label"><span>Training Gap</span><span>1</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:17%"></div></div></div>
+                    </div>
+                  </div>
+                  <div class="dash-panel">
+                    <div class="dash-panel-title">Automation Opportunities</div>
+                    <div class="opp-tags">
+                      <div class="opp-tag tactical"><strong>RPA · Tactical</strong>Direct debit update re-keying — 2 systems, ~3% error rate. Est. saving: 4 hrs/day</div>
+                      <div class="opp-tag strategic"><strong>AI · Strategic</strong>Indexation letter generation — 1,200 letters/quarter. Full automation feasible</div>
+                      <div class="opp-tag tactical"><strong>RPA · Tactical</strong>Premium recalculation — 4 mins/case × 200 cases/week = 13+ hrs manual effort</div>
+                      <div class="opp-tag strategic"><strong>AI · Strategic</strong>Gender marker &amp; name update workflows — low complexity, high volume</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="dash-summary">
+                  <h4>Programme Summary</h4>
+                  <ul>
+                    <li>19 of 28 findings fully reviewed and actioned — 68% completion rate</li>
+                    <li>4 automation opportunities identified with quantified effort savings</li>
+                    <li>All high-priority compliance findings resolved ahead of Consumer Duty deadline</li>
+                    <li>Process ownership model established with quarterly review cadences</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <div class="section-label">Additional Case Studies</div>
+        <h2 class="section-title">Further Engagements</h2>
+        <p class="section-intro">Delivering structured BA practice across government infrastructure and professional services sectors.</p>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <div class="cs-header">
+              <div class="cs-org">Central Government Infrastructure</div>
+              <h3>Network Rail — Business Analysis &amp; Process Improvement</h3>
+              <div class="cs-meta">2019 – 2020 · Infrastructure · Change Programme</div>
+            </div>
+            <div class="cs-body">
+              <div class="cs-section"><h4>Challenge</h4><ul><li>Inconsistent business analysis practice across a complex, geographically distributed programme</li><li>Lack of standardised requirements documentation and stakeholder sign-off process</li><li>Need to align delivery to PRINCE2 governance and audit requirements</li></ul></div>
+              <div class="cs-section"><h4>What We Delivered</h4><ul><li>Structured requirements elicitation across business and technical stakeholders</li><li>As-Is process documentation for key operational workflows</li><li>PRINCE2-aligned business cases and governance documentation</li><li>Workshop facilitation and stakeholder engagement across multiple directorates</li></ul></div>
+              <div class="cs-tags"><span class="cs-tag">BPMN 2.0</span><span class="cs-tag">PRINCE2</span><span class="cs-tag">Requirements Analysis</span><span class="cs-tag">Stakeholder Elicitation</span></div>
+            </div>
+          </div>
+          <div class="cs-card">
+            <div class="cs-header">
+              <div class="cs-org">Professional Services</div>
+              <h3>Halian — Senior BA Consultancy Engagement</h3>
+              <div class="cs-meta">2021 – 2022 · Consulting · Multi-sector Delivery</div>
+            </div>
+            <div class="cs-body">
+              <div class="cs-section"><h4>Challenge</h4><ul><li>Client organisations with undefined or poorly documented operational processes</li><li>Rapid-turnaround BA support needed across multiple client engagements</li><li>Requirement to translate complex operational environments into clear target-state designs</li></ul></div>
+              <div class="cs-section"><h4>What We Delivered</h4><ul><li>End-to-end process mapping and gap analysis across client environments</li><li>Stakeholder workshops and requirements capture in compressed timescales</li><li>Target-state process designs and roadmap documentation</li><li>Business cases and change impact assessments for technology investment decisions</li></ul></div>
+              <div class="cs-tags"><span class="cs-tag">Process Mapping</span><span class="cs-tag">GAP Analysis</span><span class="cs-tag">Change Management</span><span class="cs-tag">Multi-sector</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ABOUT PAGE
+══════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-wrapper">
+    <section class="section-light">
+      <div class="container">
+        <div class="section-label">About Flowline Robotics</div>
+        <h2 class="section-title">Process Flows Across Your Organisation. Robotics for the Future.</h2>
+        <p class="section-intro">Flowline Robotics was founded on a simple idea: most organisations already have the answers buried in their processes — they just need someone to map them, improve them, and make them intelligent.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+          <div>
+            <h3 style="font-size:20px;color:var(--navy);margin-bottom:16px;font-weight:bold">Why Flowline Robotics?</h3>
+            <p style="color:var(--muted);line-height:1.8;margin-bottom:16px"><strong>Flowline</strong> — for the process flows that run across every organisation. Every function, every team, every customer interaction follows a flow. We make those flows visible, structured and improvable.</p>
+            <p style="color:var(--muted);line-height:1.8;margin-bottom:16px"><strong>Robotics</strong> — for the future. The organisations that will thrive are those that build a process baseline today, ready for AI and automation tomorrow. You cannot automate what you have not first understood.</p>
+            <p style="color:var(--muted);line-height:1.8">Together: a practice that bridges the gap between how your business works today and how it needs to work in an AI-enabled world.</p>
+          </div>
+          <div>
+            <h3 style="font-size:20px;color:var(--navy);margin-bottom:16px;font-weight:bold">Our Approach</h3>
+            <div class="approach-card"><span class="icon">🗺️</span><div><h4>Map It</h4><p>We document your As-Is processes at the level of detail that actually drives decisions — not too high, not too low.</p></div></div>
+            <div class="approach-card"><span class="icon">🔍</span><div><h4>Improve It</h4><p>We identify gaps, inconsistencies and risks. We define your To-Be target state with clear ownership and governance.</p></div></div>
+            <div class="approach-card"><span class="icon">🤖</span><div><h4>Automate It</h4><p>We identify where RPA and AI can deliver the highest return — and produce the business cases to make it happen.</p></div></div>
+            <div class="approach-card"><span class="icon">🧠</span><div><h4>Make It Queryable</h4><p>We structure your process estate so it can be understood by AI tools — making your organisation genuinely AI-ready.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-dark">
+      <div class="container">
+        <div class="section-label" style="color:var(--gold)">Leadership</div>
+        <h2 class="section-title section-title-light">Michael Ahmed — Founder &amp; Principal Consultant</h2>
+        <p class="section-intro section-intro-light">Twenty years of enterprise transformation across financial services, central government and regulated utilities — from first workshop to governance-ready delivery.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px">
+          <div class="rl-panel">
+            <h3>Experience &amp; Expertise</h3>
             <ul>
-              <li>Personally owned pre-cutover data quality across all 42 source systems — designing and executing the data profiling, cleansing and reconciliation methodology</li>
-              <li>Managed a Data Quality &amp; Assurance team through every stage of extraction, transformation, validation and load</li>
-              <li>Produced data mapping specifications, exception registers and remediation logs — maintaining a clear audit trail from source record to Oracle HRMS target</li>
-              <li>Ran structured workshops with department leads to resolve data conflicts, agree authoritative sources and sign off migration-ready datasets</li>
-              <li>Delivered cutover readiness criteria and go / no-go decision documentation for programme board sign-off</li>
+              <li>20+ years Senior Business Analyst across FTSE-listed and regulated environments</li>
+              <li>BPMN 2.0 process mapping at L3–L5 with full taxonomy ownership</li>
+              <li>SOP rationalisation — typically 60–70% volume reduction</li>
+              <li>FCA Consumer Duty alignment — four outcomes framework</li>
+              <li>AI and RPA opportunity identification and business case production</li>
+              <li>PRINCE2 Practitioner · GDPR Practitioner · Anthropic AI Certified</li>
             </ul>
           </div>
-          <div class="cs-section">
-            <h4>Key Outcome</h4>
+          <div class="rl-panel">
+            <h3>Sectors &amp; Domains</h3>
             <ul>
-              <li>Successful cutover of 1,200 employee records with zero critical data loss — on schedule and within governance framework</li>
-              <li>Programme recognised internally as a benchmark for complex government HR data migration practice</li>
+              <li>🏦 Financial Services &amp; Insurance (Royal London Group)</li>
+              <li>🏛️ Central Government (Network Rail)</li>
+              <li>⚡ Utilities &amp; Field Operations</li>
+              <li>📊 Banking &amp; Regulatory Reporting</li>
+              <li>⚖️ Legal &amp; Professional Services</li>
+              <li>🚂 Transport &amp; Infrastructure</li>
             </ul>
           </div>
-          <div class="cs-tags">
-            <span class="cs-tag">Data Migration</span>
-            <span class="cs-tag">Oracle HRMS</span>
-            <span class="cs-tag">Data Quality &amp; Assurance</span>
-            <span class="cs-tag">Central Government</span>
-            <span class="cs-tag">Stakeholder Workshops</span>
-            <span class="cs-tag">Audit Trail</span>
-          </div>
+        </div>
+        <div class="section-label" style="color:var(--gold);margin-bottom:24px">Career Timeline</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-date">2025–2026</div><div class="tl-dot featured"></div><div class="tl-body"><h3>Customer Journey Analyst / Senior BA</h3><div class="co">Royal London Group</div><p>Led the Update Plan Details L3 process — 19 BPMN L4 maps, 57 L5 processes, ~57 SOPs rationalised. Consumer Duty alignment across four outcomes.</p><div class="tl-tags"><span class="tl-tag">BPMN 2.0</span><span class="tl-tag">Consumer Duty</span><span class="tl-tag">SOP Rationalisation</span><span class="tl-tag">Process Taxonomy</span></div></div></div>
+          <div class="tl-item"><div class="tl-date">2021–2022</div><div class="tl-dot"></div><div class="tl-body"><h3>Senior Business Analyst</h3><div class="co">Halian (Consultancy)</div><p>Multi-sector BA consultancy delivery. End-to-end process mapping, stakeholder elicitation, target-state design and business cases across multiple client environments.</p><div class="tl-tags"><span class="tl-tag">Consulting</span><span class="tl-tag">Process Mapping</span><span class="tl-tag">Requirements</span><span class="tl-tag">Multi-sector</span></div></div></div>
+          <div class="tl-item"><div class="tl-date">2019–2020</div><div class="tl-dot"></div><div class="tl-body"><h3>Business Analyst</h3><div class="co">Network Rail</div><p>Structured requirements elicitation and As-Is process documentation across a complex infrastructure change programme. PRINCE2-aligned governance and business cases.</p><div class="tl-tags"><span class="tl-tag">PRINCE2</span><span class="tl-tag">Infrastructure</span><span class="tl-tag">Requirements</span><span class="tl-tag">Government</span></div></div></div>
+          <div class="tl-item"><div class="tl-date">Earlier</div><div class="tl-dot"></div><div class="tl-body"><h3>Senior Business Analyst</h3><div class="co">Various Financial Services &amp; Regulated Sectors</div><p>20+ years of enterprise BA practice across financial services, banking, utilities and central government — building deep domain expertise in regulated environments.</p><div class="tl-tags"><span class="tl-tag">Financial Services</span><span class="tl-tag">Banking</span><span class="tl-tag">Utilities</span><span class="tl-tag">Regulatory</span></div></div></div>
         </div>
       </div>
-
-    </div>
+    </section>
   </div>
-</section>
+</div>
 
-<!-- ── User Story ── -->
-<section id="user-story">
-  <div class="container">
-    <div class="section-label">BA Deliverable in Practice</div>
-    <h2 class="section-title">User Story: Update Plan Details — Royal London Group</h2>
-    <p class="section-intro">A worked example of how I translate stakeholder needs into structured, governance-ready requirements — with clear acceptance criteria and traceability throughout.</p>
-
-    <div class="story-card">
-      <span class="story-badge">User Story · Life &amp; Pensions · Customer Operations · Update Plan Details</span>
-
-      <div class="story-section">
-        <h4>Process Taxonomy Context</h4>
-        <p style="font-size:15px; color:var(--muted); line-height:1.7;">
-          <strong style="color:var(--navy)">Level 1:</strong> Customer Account Management &nbsp;→&nbsp;
-          <strong style="color:var(--navy)">Level 2:</strong> Execute Customer Instruction &nbsp;→&nbsp;
-          <strong style="color:var(--navy)">Level 3:</strong> Update Plan Details (19 Level 4 processes · 57 Level 5 processes)
-        </p>
-      </div>
-
-      <div class="story-section">
-        <h4>Context</h4>
-        <p style="font-size:15px; color:var(--muted); line-height:1.7;">During the Group-wide process architecture programme, workshop sessions with cross-functional teams revealed that service teams were relying on 57 fragmented SOPs across the Update Plan Details L3 process — with no consistent entry point, contradictory guidance within documents, and no defined 'definition of done'. This created inconsistent customer outcomes and an unauditable process trail.</p>
-      </div>
-
-      <blockquote>
-        "As a Customer Operations Specialist at Royal London, I need a single, clearly structured end-to-end process guide for updating plan details — so that I can action every customer instruction consistently, meet our Consumer Duty obligations, and provide auditors with a clear evidence trail of customer outcomes."
-      </blockquote>
-
-      <div class="story-section">
-        <h4>Acceptance Criteria</h4>
-        <div class="story-ac">
-          <ul>
-            <li>19 BPMN 2.0 Level 4 process maps exist covering the complete Update Plan Details lifecycle — from instruction received through to confirmed update and closure</li>
-            <li>Each process map has a named owner, version number, effective date and scheduled review date</li>
-            <li>All 57 legacy SOPs have been reviewed; contradictory guidance resolved; consolidated into a single supporting document per Level 5 process</li>
-            <li>Each process step has a defined 'definition of done' and a clear decision gateway for exceptions</li>
-            <li>Each process map has been reviewed and signed off by Level 3 &amp; Level 4 Owners, Risk &amp; Compliance, and the Group Process Owner</li>
-            <li>A findings register records all issues identified, decisions taken, and rationale — providing a full audit trail</li>
-            <li>The new processes are published in the approved document management system and superseded SOPs are archived with a redirect notice</li>
-          </ul>
+<!-- ══════════════════════════════════════════
+     CONTACT PAGE
+══════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-wrapper">
+    <section class="section-dark">
+      <div class="container">
+        <div class="section-label" style="color:var(--gold)">Get in touch</div>
+        <h2 class="section-title section-title-light">Ready to map, improve and automate your business?</h2>
+        <p class="section-intro section-intro-light">Whether you need a process architecture lead, a Senior BA to own a workstream, or a regulatory alignment specialist — let's talk about what you're trying to achieve.</p>
+        <div class="contact-grid">
+          <div class="contact-item"><div class="ci-label">Email</div><div class="ci-value"><a href="mailto:maahmed01@hotmail.com">maahmed01@hotmail.com</a></div><div class="ci-note">Typically responds within 24 hours</div></div>
+          <div class="contact-item"><div class="ci-label">Phone</div><div class="ci-value"><a href="tel:+447377936333">+44 (0)7377 936 333</a></div><div class="ci-note">Available Mon–Fri, 9am–6pm</div></div>
+          <div class="contact-item"><div class="ci-label">Location</div><div class="ci-value">Middlewich, Cheshire</div><div class="ci-note">Open to remote, hybrid or on-site roles UK-wide</div></div>
+          <div class="contact-item"><div class="ci-label">Availability</div><div class="ci-value">Immediately Available</div><div class="ci-note">Contract or permanent · Senior BA / Process Lead</div></div>
+          <div class="contact-item" style="grid-column:1/-1"><div class="ci-label">LinkedIn</div><div class="ci-value"><a href="https://www.linkedin.com/in/michael-ahmed-932a9a/" target="_blank" rel="noopener">linkedin.com/in/michael-ahmed-932a9a</a></div><div class="ci-note">Connect with me on LinkedIn</div></div>
         </div>
+        <div class="avail-badge"><div class="avail-dot"></div>Available immediately — open to contract and permanent opportunities</div>
       </div>
-
-      <div class="story-section">
-        <h4>Regulatory Mapping (Consumer Duty)</h4>
-        <ul>
-          <li><strong>Consumer Support:</strong> Standardised processes ensure every customer instruction is handled consistently regardless of which team member manages the case</li>
-          <li><strong>Consumer Understanding:</strong> Removal of contradictory SOP guidance eliminates the risk of agents providing inconsistent or confusing communications to customers</li>
-          <li><strong>Products &amp; Services:</strong> End-to-end process documentation evidences that plan update instructions are executed as designed and regulatory expectations are met</li>
-          <li><strong>Price &amp; Value:</strong> SOP rationalisation (57 → consolidated guides) reduces operational overhead, supporting fair value in the cost of service delivery</li>
-        </ul>
-      </div>
-
-      <div class="story-section">
-        <h4>Deliverables Produced</h4>
-        <ul>
-          <li>19 BPMN 2.0 Level 4 process maps (As-Is and To-Be versions) covering all Update Plan Details processes</li>
-          <li>SOP rationalisation: 57 documents → 1 consolidated guide per Level 5 process</li>
-          <li>Definition of done for each process stage</li>
-          <li>Findings register with full decision log and rationale</li>
-          <li>Stakeholder sign-off documentation and release pack (signed by L3 &amp; L4 Owners, Risk &amp; Compliance, Group Process Owner)</li>
-          <li>Change log: what changed, why, when, who approved</li>
-        </ul>
-      </div>
-    </div>
+    </section>
   </div>
-</section>
-
-<!-- ── Findings & Actions Dashboard ── -->
-<section id="dashboard">
-  <div class="container">
-    <div class="section-label">BA Deliverable in Practice</div>
-    <h2 class="section-title">Findings &amp; Actions Tracker</h2>
-    <p class="section-intro">A live example of the structured findings dashboard delivered as part of the Royal London Group-wide process architecture engagement — giving leadership a single view of what was found, what it means, and what happens next.</p>
-
-    <div class="dash-frame">
-      <div class="dash-header">
-        <div class="dash-header-left">
-          <h2>Process Architecture — Findings &amp; Actions Tracker</h2>
-          <p>Group-wide Operations Transformation · Life &amp; Pensions · Update Plan Details · Contains data from 2025 onwards</p>
-        </div>
-        <div class="dash-header-right">Findings Actions Tracker</div>
-      </div>
-
-      <div class="kpi-strip">
-        <div class="kpi-box"><div class="kv blue">28</div><div class="kl">Total Findings</div></div>
-        <div class="kpi-box"><div class="kv green">19</div><div class="kl">Reviews Complete</div></div>
-        <div class="kpi-box"><div class="kv">68%</div><div class="kl">Completion Rate</div></div>
-        <div class="kpi-box"><div class="kv">31</div><div class="kl">Total Level 3s</div></div>
-        <div class="kpi-box"><div class="kv">142</div><div class="kl">Total Level 4s</div></div>
-      </div>
-
-      <div class="dash-body">
-
-        <!-- Panel 1: Finding Category -->
-        <div class="dash-panel">
-          <div class="dash-panel-title">Finding Category</div>
-          <div class="chart-wrap"><canvas id="categoryChart"></canvas></div>
-          <div style="display:flex;gap:16px;margin-top:12px;justify-content:center;">
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:#2e7fc1;display:inline-block;"></span>Strategic
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:#b05cc8;display:inline-block;"></span>Tactical
-            </div>
-          </div>
-          <div style="margin-top:16px;">
-            <div class="dash-panel-title">Category Breakdown</div>
-            <div class="cat-bars">
-              <div class="cat-row"><div class="cat-label"><span>Procedure Gap</span><span>6</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:100%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>Procedure Unclear</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:83%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>System Limitation</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:83%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>Digital Opportunity</span><span>5</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:83%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>Process Not Aligned</span><span>4</span></div><div class="cat-bar-bg"><div class="cat-bar-fill both" style="width:67%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>Resource Impacting Service</span><span>2</span></div><div class="cat-bar-bg"><div class="cat-bar-fill tactical" style="width:33%"></div></div></div>
-              <div class="cat-row"><div class="cat-label"><span>Risk Appetite Not Aligned</span><span>1</span></div><div class="cat-bar-bg"><div class="cat-bar-fill strategic" style="width:17%"></div></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 2: Mapping Status -->
-        <div class="dash-panel">
-          <div class="dash-panel-title">Level 4 Mapping Status</div>
-          <div class="chart-wrap"><canvas id="mappingChart"></canvas></div>
-          <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px;">
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:#5de09a;display:inline-block;flex-shrink:0;"></span>Completed <span style="margin-left:auto;color:rgba(255,255,255,0.45);">57</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:#2e7fc1;display:inline-block;flex-shrink:0;"></span>In Progress <span style="margin-left:auto;color:rgba(255,255,255,0.45);">38</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:#b05cc8;display:inline-block;flex-shrink:0;"></span>Not Started <span style="margin-left:auto;color:rgba(255,255,255,0.45);">34</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.7);">
-              <span style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-block;flex-shrink:0;"></span>Descoped <span style="margin-left:auto;color:rgba(255,255,255,0.45);">13</span>
-            </div>
-          </div>
-          <div style="margin-top:20px;">
-            <div class="dash-panel-title">Strategic vs Tactical Split</div>
-            <div style="margin-top:8px;">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Strategic</span><span>11 (39%)</span></div>
-              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:10px;overflow:hidden;margin-bottom:10px;"><div style="width:39%;height:100%;background:#2e7fc1;border-radius:4px;"></div></div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Tactical</span><span>17 (61%)</span></div>
-              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:10px;overflow:hidden;"><div style="width:61%;height:100%;background:#b05cc8;border-radius:4px;"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 3: Opportunities & Progress -->
-        <div class="dash-panel">
-          <div class="dash-panel-title">Opportunity Classification</div>
-          <div class="opp-tags">
-            <div class="opp-tag tactical">
-              <strong>Tactical Opportunity</strong>
-              Within Group Operations — findings addressable within existing team authority and resource. Agree way forward with process owners.
-            </div>
-            <div class="opp-tag strategic">
-              <strong>Strategic Opportunity</strong>
-              Would need to be developed with wider organisational support and/or funding approval. Escalation to programme board recommended.
-            </div>
-          </div>
-          <div style="margin-top:20px;">
-            <div class="dash-panel-title">Review Progress</div>
-            <div style="margin-top:8px;">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Reviews Complete</span><span>19 / 28 (68%)</span></div>
-              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;margin-bottom:12px;"><div style="width:68%;height:100%;background:linear-gradient(90deg,#5de09a,#2e7fc1);border-radius:4px;"></div></div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Actions In Progress</span><span>9 (32%)</span></div>
-              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;margin-bottom:12px;"><div style="width:32%;height:100%;background:#2e7fc1;border-radius:4px;"></div></div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:4px;"><span>Pending Review</span><span>9 (32%)</span></div>
-              <div style="background:rgba(255,255,255,0.08);border-radius:4px;height:12px;overflow:hidden;"><div style="width:32%;height:100%;background:#b05cc8;border-radius:4px;"></div></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="dash-summary">
-        <h4>Findings Summary</h4>
-        <ul>
-          <li>Findings are largely Strategic with all areas also behaving similarly at a Tactical level — requiring a dual-track response</li>
-          <li>Strategic findings point to manual workarounds for less common scenarios — system upgrades may be low-priority items already in a technical team queue</li>
-          <li>Digital Opportunity findings represent structured RPA and AI automation candidates, supported by business cases for delivery handover</li>
-        </ul>
-        <div class="dash-date">Report Date: 21/04/2026 &nbsp;·&nbsp; Level 3: Update Plan Details &nbsp;·&nbsp; Group-wide Operations Transformation · Royal London Group</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Career Timeline ── -->
-<section id="timeline">
-  <div class="container">
-    <div class="section-label">Career History</div>
-    <h2 class="section-title">20 Years of Enterprise BA Practice</h2>
-    <p class="section-intro">A track record across financial services, central government, utilities and regulated operations — with consistent themes: process rigour, stakeholder alignment, and governance-ready delivery.</p>
-
-    <div class="timeline">
-
-      <div class="tl-item">
-        <div class="tl-date">2025–2026</div>
-        <div class="tl-dot featured"></div>
-        <div class="tl-body">
-          <h3>Customer Journey Analyst / Senior Business Analyst</h3>
-          <div class="co">Royal London Group — Life &amp; Pensions</div>
-          <p>Led L3 process Update Plan Details within the Group-wide Process Architecture Taxonomy — 19 end-to-end BPMN 2.0 Level 4 process maps, 57 Level 5 processes, ~57 SOP rationalisation, target-state operating model, Consumer Duty alignment. Group taxonomy: 32 L3 processes, 142 L4 processes.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">BPMN 2.0</span>
-            <span class="tl-tag">Process Architecture</span>
-            <span class="tl-tag">SOP Rationalisation</span>
-            <span class="tl-tag">Consumer Duty</span>
-            <span class="tl-tag">Life &amp; Pensions</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2018–2019</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Part-time)</h3>
-          <div class="co">Melius Finance Ltd., Liverpool</div>
-          <p>Analysed income streams, identified operational inefficiencies, produced current-state workflow documentation and improvement recommendations.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">Process Improvement</span>
-            <span class="tl-tag">Operational Diagnostics</span>
-            <span class="tl-tag">Financial Services</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2015</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Process Analyst</h3>
-          <div class="co">Morrison Utility Services, Stevenage</div>
-          <p>Mapped procurement and PPE supply chain processes across multi-site UK field operations. Designed future-state processes and defined requirements for a mobile ordering solution.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">Supply Chain</span>
-            <span class="tl-tag">As-Is / To-Be</span>
-            <span class="tl-tag">Utilities</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2008</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Contract)</h3>
-          <div class="co">Fortis Bank, Brussels</div>
-          <p>KPI/SLA performance dashboards for 12 Business Information Security Officers. RACI, SLA definitions and KPI frameworks for the Programme Board.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">KPI / SLA</span>
-            <span class="tl-tag">Banking</span>
-            <span class="tl-tag">Governance</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2007–2008</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Contract)</h3>
-          <div class="co">LexisNexis Butterworths, London</div>
-          <p>Business Continuity Management process review — mapping risk security policies to target state, identifying PII and payment data across distributed systems, agreeing GDPR-aligned data governance standards.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">BCM</span>
-            <span class="tl-tag">GDPR</span>
-            <span class="tl-tag">Data Governance</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2007</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Process Analyst (Contract)</h3>
-          <div class="co">Network Rail, London</div>
-          <p>PRINCE2-governed SLA measurement programme across Information Management departments. Visio As-Is swim-lane diagrams; automated auditable KPI model for a key SME's tacit knowledge.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">PRINCE2</span>
-            <span class="tl-tag">SLA Management</span>
-            <span class="tl-tag">Swim-lane Diagrams</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2006</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Contract)</h3>
-          <div class="co">Alliance Boots Group, London</div>
-          <p>Managed six-store ERP (Navision) pilot — Group Component logical data model, GAP analysis, Level 3 swim-lane process model; DataFlux X-ref platform for wholesale supply chain consolidation.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">ERP</span>
-            <span class="tl-tag">Data Modelling</span>
-            <span class="tl-tag">GAP Analysis</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2005–2006</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Contract)</h3>
-          <div class="co">Halian Consultancy / Central Government</div>
-          <p>Consolidated 1,200 employees from 42 disparate legacy HR systems into Oracle HRMS — one of the most complex data migration programmes of its kind. Personally owned pre-cutover data quality.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">Data Migration</span>
-            <span class="tl-tag">Oracle HRMS</span>
-            <span class="tl-tag">Central Government</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-date">2005</div>
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <h3>Business Analyst (Contract)</h3>
-          <div class="co">ISBAN Bank, Milton Keynes</div>
-          <p>Managed Data Quality &amp; Assurance teams delivering regulatory reporting for FSA, Basel II and Bank of England. Bespoke MS Access cost-benefit scoring model; impact workshops.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">FSA Regulatory Reporting</span>
-            <span class="tl-tag">Basel II</span>
-            <span class="tl-tag">Data Quality</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Skills ── -->
-<section id="skills">
-  <div class="container">
-    <div class="section-label">Skills &amp; Tools</div>
-    <h2 class="section-title">Technical &amp; Analytical Proficiency</h2>
-    <p class="section-intro">Combining deep BA methodology with the tooling and domain knowledge to deliver in complex, regulated environments.</p>
-
-    <div class="skills-grid">
-      <div>
-        <div class="skill-row">
-          <div class="name">BPMN 2.0 Process Mapping <span>Expert</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:95%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">SOP Design &amp; Rationalisation <span>Expert</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:95%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Requirements Analysis <span>Expert</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Stakeholder Workshop Facilitation <span>Expert</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:90%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Document Control &amp; Governance <span>Expert</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
-        </div>
-      </div>
-      <div>
-        <div class="skill-row">
-          <div class="name">RPA / AI Opportunity Identification <span>Advanced</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:82%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Regulatory Compliance (FCA/FSA/GDPR) <span>Advanced</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Data Migration &amp; Quality Assurance <span>Advanced</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">PRINCE2 Programme Governance <span>Advanced</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:78%"></div></div>
-        </div>
-        <div class="skill-row">
-          <div class="name">Business Case Development <span>Advanced</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="skills-tags" style="margin-top:40px">
-      <h4>Tools &amp; Frameworks</h4>
-      <div class="tag-cloud">
-        <span class="tag">ARIS Business Architect</span>
-        <span class="tag">Microsoft Visio</span>
-        <span class="tag">BPMN 2.0</span>
-        <span class="tag">MS Office Suite</span>
-        <span class="tag">SharePoint</span>
-        <span class="tag">Oracle HRMS</span>
-        <span class="tag">Process Mining</span>
-        <span class="tag">PRINCE2</span>
-        <span class="tag">DataFlux</span>
-        <span class="tag">AI &amp; Generative AI</span>
-        <span class="tag">RPA Tooling</span>
-        <span class="tag">MS Access</span>
-        <span class="tag">Navision ERP</span>
-        <span class="tag">GDPR / EU Data Law</span>
-        <span class="tag">FSA / FCA Frameworks</span>
-        <span class="tag">Consumer Duty</span>
-        <span class="tag">Basel II</span>
-      </div>
-    </div>
-
-    <div style="margin-top:48px">
-      <h4 style="font-size:15px; color:var(--navy); margin-bottom:18px; font-weight:bold;">Sectors &amp; Domains</h4>
-      <div class="sectors-grid">
-        <div class="sector-card"><div class="icon">🏦</div><h4>Financial Services &amp; Insurance</h4></div>
-        <div class="sector-card"><div class="icon">🏛️</div><h4>Central Government</h4></div>
-        <div class="sector-card"><div class="icon">⚡</div><h4>Utilities &amp; Field Operations</h4></div>
-        <div class="sector-card"><div class="icon">📊</div><h4>Banking &amp; Regulatory Reporting</h4></div>
-        <div class="sector-card"><div class="icon">⚖️</div><h4>Legal &amp; Professional Services</h4></div>
-        <div class="sector-card"><div class="icon">🚂</div><h4>Transport &amp; Infrastructure</h4></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Contact ── -->
-<section id="contact">
-  <div class="container">
-    <div class="section-label">Get in touch</div>
-    <h2 class="section-title">Available for your next transformation programme</h2>
-    <p class="section-intro">Whether you need a process architecture lead, a Senior BA to own a workstream, or a regulatory alignment specialist — let's talk about what you're trying to achieve.</p>
-
-    <div class="contact-grid">
-      <div class="contact-item">
-        <div class="ci-label">Email</div>
-        <div class="ci-value"><a href="mailto:maahmed01@hotmail.com">maahmed01@hotmail.com</a></div>
-        <div class="ci-note">Typically responds within 24 hours</div>
-      </div>
-      <div class="contact-item">
-        <div class="ci-label">Phone</div>
-        <div class="ci-value"><a href="tel:+447377936333">+44 (0)7377 936 333</a></div>
-        <div class="ci-note">Available Mon–Fri, 9am–6pm</div>
-      </div>
-      <div class="contact-item">
-        <div class="ci-label">Location</div>
-        <div class="ci-value">Middlewich, Cheshire</div>
-        <div class="ci-note">Open to remote, hybrid or on-site roles UK-wide</div>
-      </div>
-      <div class="contact-item">
-        <div class="ci-label">Availability</div>
-        <div class="ci-value">Immediately Available</div>
-        <div class="ci-note">Contract or permanent · Senior BA / Process Lead</div>
-      </div>
-      <div class="contact-item" style="grid-column: 1 / -1;">
-        <div class="ci-label">LinkedIn</div>
-        <div class="ci-value"><a href="https://www.linkedin.com/in/michael-ahmed-932a9a/" target="_blank" rel="noopener">linkedin.com/in/michael-ahmed-932a9a</a></div>
-        <div class="ci-note">Connect with me on LinkedIn</div>
-      </div>
-    </div>
-
-    <div class="avail-badge">
-      <div class="avail-dot"></div>
-      Available immediately — open to contract and permanent opportunities
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ── Footer ── -->
 <footer>
-  <p>Michael Ahmed · Senior Business Analyst &amp; Process Architecture Specialist · Middlewich, Cheshire · © 2026</p>
-  <p style="margin-top:6px">20 years of enterprise transformation · Financial Services · Central Government · Regulated Operations</p>
+  <p>Flowline Robotics · Process Architecture · AI Enablement · Business Transformation · © 2026</p>
+  <p style="margin-top:6px">Led by Michael Ahmed — Senior Business Analyst &amp; Process Specialist · Middlewich, Cheshire</p>
 </footer>
 
 <script>
+// ── Page routing ──
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a[id^="nav-"]').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  var navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  // Reinit charts if case studies page
+  if (page === 'casestudies') setTimeout(initCharts, 100);
+}
+
+// Set home as active on load
+document.getElementById('nav-home').classList.add('active');
+
 // ── Circuit board animation ──
 var circuitCanvas = document.getElementById('circuitCanvas');
 if (circuitCanvas) {
@@ -1649,8 +632,8 @@ if (circuitCanvas) {
   var cW, cH, cGrid = 60, cSegs = [], cNodes = [], cPulses = [];
 
   function cResize() {
-    cW = circuitCanvas.width = window.innerWidth;
-    cH = circuitCanvas.height = window.innerHeight;
+    cW = circuitCanvas.width = circuitCanvas.offsetWidth;
+    cH = circuitCanvas.height = circuitCanvas.offsetHeight;
     cBuild();
   }
 
@@ -1658,76 +641,36 @@ if (circuitCanvas) {
     cSegs = []; cNodes = []; cPulses = [];
     var cols = Math.floor(cW / cGrid) + 2;
     var rows = Math.floor(cH / cGrid) + 2;
-    for (var r = 0; r < rows; r++) {
-      for (var c = 0; c < cols - 1; c++) {
-        if (Math.random() < 0.5) {
-          cSegs.push({ x1: c*cGrid, y1: r*cGrid, x2: (c+1)*cGrid, y2: r*cGrid });
-        }
-      }
-    }
-    for (var c2 = 0; c2 < cols; c2++) {
-      for (var r2 = 0; r2 < rows - 1; r2++) {
-        if (Math.random() < 0.5) {
-          cSegs.push({ x1: c2*cGrid, y1: r2*cGrid, x2: c2*cGrid, y2: (r2+1)*cGrid });
-        }
-      }
-    }
-    for (var r3 = 0; r3 < rows; r3++) {
-      for (var c3 = 0; c3 < cols; c3++) {
-        if (Math.random() < 0.2) {
-          cNodes.push({ x: c3*cGrid, y: r3*cGrid, r: 3 + Math.random()*3, p: Math.random()*Math.PI*2 });
-        }
-      }
-    }
+    for (var r = 0; r < rows; r++)
+      for (var c = 0; c < cols-1; c++)
+        if (Math.random() < 0.5) cSegs.push({x1:c*cGrid,y1:r*cGrid,x2:(c+1)*cGrid,y2:r*cGrid});
+    for (var c2 = 0; c2 < cols; c2++)
+      for (var r2 = 0; r2 < rows-1; r2++)
+        if (Math.random() < 0.5) cSegs.push({x1:c2*cGrid,y1:r2*cGrid,x2:c2*cGrid,y2:(r2+1)*cGrid});
+    for (var r3 = 0; r3 < rows; r3++)
+      for (var c3 = 0; c3 < cols; c3++)
+        if (Math.random() < 0.2) cNodes.push({x:c3*cGrid,y:r3*cGrid,r:3+Math.random()*3,p:Math.random()*Math.PI*2});
     for (var i = 0; i < 25; i++) {
-      var seg = cSegs[Math.floor(Math.random() * cSegs.length)];
-      if (seg) cPulses.push({ seg: seg, t: Math.random(), spd: 0.005 + Math.random()*0.007 });
+      var seg = cSegs[Math.floor(Math.random()*cSegs.length)];
+      if (seg) cPulses.push({seg:seg,t:Math.random(),spd:0.005+Math.random()*0.007});
     }
   }
 
   function cDraw() {
-    cctx.clearRect(0, 0, cW, cH);
-    cSegs.forEach(function(s) {
-      cctx.beginPath();
-      cctx.moveTo(s.x1, s.y1);
-      cctx.lineTo(s.x2, s.y2);
-      cctx.strokeStyle = 'rgba(46,127,193,0.18)';
-      cctx.lineWidth = 1;
-      cctx.stroke();
-    });
-    cNodes.forEach(function(n) {
-      n.p += 0.02;
-      var a = 0.3 + 0.3 * Math.sin(n.p);
-      cctx.beginPath();
-      cctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-      cctx.fillStyle = 'rgba(126,200,240,' + a + ')';
-      cctx.fill();
-    });
-    cPulses.forEach(function(p) {
-      p.t += p.spd;
-      if (p.t > 1.2) {
-        p.seg = cSegs[Math.floor(Math.random() * cSegs.length)];
-        p.t = 0;
-      }
-      var t = Math.min(1, p.t);
-      var px = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t;
-      var py = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t;
-      cctx.beginPath();
-      cctx.arc(px, py, 3, 0, Math.PI*2);
-      cctx.fillStyle = 'rgba(180,230,255,0.95)';
-      cctx.fill();
-      var t0 = Math.max(0, t - 0.1);
-      var px0 = p.seg.x1 + (p.seg.x2 - p.seg.x1) * t0;
-      var py0 = p.seg.y1 + (p.seg.y2 - p.seg.y1) * t0;
-      var g = cctx.createLinearGradient(px0, py0, px, py);
-      g.addColorStop(0, 'rgba(46,127,193,0)');
-      g.addColorStop(1, 'rgba(126,200,240,0.8)');
-      cctx.beginPath();
-      cctx.moveTo(px0, py0);
-      cctx.lineTo(px, py);
-      cctx.strokeStyle = g;
-      cctx.lineWidth = 2;
-      cctx.stroke();
+    cctx.clearRect(0,0,cW,cH);
+    cSegs.forEach(function(s){cctx.beginPath();cctx.moveTo(s.x1,s.y1);cctx.lineTo(s.x2,s.y2);cctx.strokeStyle='rgba(46,127,193,0.18)';cctx.lineWidth=1;cctx.stroke();});
+    cNodes.forEach(function(n){n.p+=0.02;var a=0.3+0.3*Math.sin(n.p);cctx.beginPath();cctx.arc(n.x,n.y,n.r,0,Math.PI*2);cctx.fillStyle='rgba(126,200,240,'+a+')';cctx.fill();});
+    cPulses.forEach(function(p){
+      p.t+=p.spd;
+      if(p.t>1.2){p.seg=cSegs[Math.floor(Math.random()*cSegs.length)];p.t=0;}
+      var t=Math.min(1,p.t);
+      var px=p.seg.x1+(p.seg.x2-p.seg.x1)*t, py=p.seg.y1+(p.seg.y2-p.seg.y1)*t;
+      cctx.beginPath();cctx.arc(px,py,3,0,Math.PI*2);cctx.fillStyle='rgba(180,230,255,0.95)';cctx.fill();
+      var t0=Math.max(0,t-0.1);
+      var px0=p.seg.x1+(p.seg.x2-p.seg.x1)*t0, py0=p.seg.y1+(p.seg.y2-p.seg.y1)*t0;
+      var g=cctx.createLinearGradient(px0,py0,px,py);
+      g.addColorStop(0,'rgba(46,127,193,0)');g.addColorStop(1,'rgba(126,200,240,0.8)');
+      cctx.beginPath();cctx.moveTo(px0,py0);cctx.lineTo(px,py);cctx.strokeStyle=g;cctx.lineWidth=2;cctx.stroke();
     });
     requestAnimationFrame(cDraw);
   }
@@ -1738,30 +681,21 @@ if (circuitCanvas) {
 }
 
 // ── Charts ──
-window.addEventListener('DOMContentLoaded', function() {
-  const catEl = document.getElementById('categoryChart');
-  const mapEl = document.getElementById('mappingChart');
-  if (catEl) {
-    new Chart(catEl.getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Strategic', 'Tactical'],
-        datasets: [{ data: [11, 17], backgroundColor: ['#2e7fc1', '#b05cc8'], borderColor: 'rgba(255,255,255,0.05)', borderWidth: 2, hoverOffset: 4 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/28*100)}%)` } } } }
-    });
-  }
-  if (mapEl) {
-    new Chart(mapEl.getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Completed', 'In Progress', 'Not Started', 'Descoped'],
-        datasets: [{ data: [57, 38, 34, 13], backgroundColor: ['#5de09a', '#2e7fc1', '#b05cc8', 'rgba(255,255,255,0.15)'], borderColor: 'rgba(255,255,255,0.05)', borderWidth: 2, hoverOffset: 4 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/142*100)}% of L4s)` } } } }
-    });
-  }
-});
+var chartsInitialised = false;
+function initCharts() {
+  if (chartsInitialised) return;
+  var mapEl = document.getElementById('mappingChart');
+  if (!mapEl) return;
+  chartsInitialised = true;
+  new Chart(mapEl.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Reviews Complete','In Progress','Not Started / Hold'],
+      datasets: [{ data: [19,5,4], backgroundColor: ['#2a9e5a','#e8a020','#c0392b'], borderWidth: 0 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, cutout:'65%', plugins:{ legend:{ position:'bottom', labels:{ color:'rgba(255,255,255,0.65)', font:{size:11}, padding:10 } } } }
+  });
+}
 </script>
 </body>
 </html>
